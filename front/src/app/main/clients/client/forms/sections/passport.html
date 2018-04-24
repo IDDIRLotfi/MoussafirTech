@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-12 bold">Passport <br><br></div>
+	<div class="col-md-6">
+		<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.first_name.$invalid && (vmCl.personalInfo.first_name.$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="passport_id">N° Passeport<span class="required-input">*</span></label>
+			<input type="number" class="form-control" id="passport_id" name="passport_id" placeholder="N° Passeport" ng-model="vmCl.user.passport.id"
+			    ng-required="false">
+			<span class="help-block error-block basic-block">Le N° Passeport est obligatoire</span>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.issue_date.$invalid && (vmCl.personalInfo.issue_date.$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="issue_date">Date de délivrance<span class="required-input">*</span></label>
+			<input type="date" class="form-control" id="issue_date" name="issue_date" placeholder="Date de délivrance" ng-model="vmCl.user.passport.issue_date"
+			    ng-required="false">
+			<span class="help-block error-block basic-block">La date de délivrance est obligatoire</span>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.expiration_date.$invalid && (vmCl.personalInfo.expiration_date.$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="expiration_date">Date d’expiration<span class="required-input">*</span></label>
+			<input type="date" class="form-control" id="expiration_date" name="expiration_date" placeholder="Date d’expiration" ng-model="vmCl.user.passport.expiration_date"
+			    ng-required="false">
+			<span class="help-block error-block basic-block">La date d’expiration est obligatoire</span>
+		</div>
+	</div>
+</div>

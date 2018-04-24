@@ -1,0 +1,32 @@
+<div class="auth-page">
+	<main class="auth-main">
+		<div class="auth-block">
+			<h1>Se connecter</h1>
+
+			<form class="form-horizontal" ng-submit="vm.login()">
+				<div class="form-group">
+					<label for="username" class="col-sm-12" style="color:#fff">Nom d'utilisateur</label>
+
+					<div class="col-sm-12">
+						<input type="text" class="form-control" ng-model="vm.user.email" id="username" placeholder="Nom d'utilisateur">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password" class="col-sm-12" style="color:#fff">Mot de passes</label>
+
+					<div class="col-sm-12">
+						<input type="password" class="form-control" id="password" ng-model="vm.user.password" placeholder="Mot de passes">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="button" class="btn btn-default btn-auth" ng-disabled="vm.disableLogin" ng-click="vm.login()">Se connecter</button>
+					</div>
+				</div>
+			</form>
+
+			<div class="auth-sep"><span><span>El Moussafir Tech</span></span>
+			</div>
+		</div>
+	</main>
+</div>

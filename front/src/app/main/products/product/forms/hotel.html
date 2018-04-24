@@ -1,0 +1,205 @@
+<form name="hotelForm" novalidate>
+	<div class="row" ng-if="vmPro.product.type==='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.hotel.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.hotel.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.hotel.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+		<div class="col-md-12" ng-if="!vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'">
+			<hr>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm.unit_price.$invalid && (vmPro.hotelForm.unit_price.$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="unit_price">Prix Unitaire 1/2 Double<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="unit_price" name="unit_price" placeholder="Prix Unitaire" ng-model="vmPro.product.hotel.unit_price"
+				    required>
+				<span class="help-block error-block basic-block">Le Prix Unitaire est obligatoire</span>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm.profit.$invalid && (vmPro.hotelForm.profit.$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="profit">Bénéfice %<span class="required-input">*</span></label>
+				<input type="number" min="1" max="100" class="form-control" id="profit" name="profit" placeholder="Pourcentage" ng-model="vmPro.product.hotel.profit"
+				    required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="selling_price" name="selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.hotel.unit_price+vmPro.product.hotel.unit_price*(vmPro.product.hotel.profit/100)" readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Nombre de chambre-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm.nb_rooms.$invalid && (vmPro.hotelForm.nb_rooms.$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="nb_rooms">Nombre de chambre<span class="required-input">*</span></label>
+				<input type="number" min="1" max="10" class="form-control" id="nb_rooms" name="nb_rooms" placeholder="Nombre de chambre"
+				    ng-model="vmPro.product.hotel.nb_rooms" value="1" required>
+			</div>
+			<!--/Nombre de chambre-->
+		</div>
+	</div>
+	<div class="row" ng-repeat="occupant in vmPro.product.occupants track by $index">
+		<div class="col-md-12" ng-init="vmPro.product.hotel.occupants[occupant] = vmPro.product.hotel.occupants[occupant] || {}"><br>{{ ($index+1)+"- "+ vmPro.occupant(occupant).username }}<br><br></div>
+		<div class="col-md-2">
+			<!--Type Chambre -->
+			<div class="form-group" ng-class="{'has-error': vmPro.hotelForm['room_type_'+{{$index}}].$invalid && (vmPro.hotelForm['room_type_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="room_type_{{$index}}">Type chambre<span class="required-input">*</span></label>
+				<select id="room_type_{{$index}}" class="form-control" title="Type chambre" selectpicker ng-model="vmPro.product.hotel.occupants[occupant].room_type"
+				    required>
+				<option selected>Single</option>
+				<option>Double</option>
+				<option>Triple</option>
+				<option>Autre</option>
+			</select>
+				<span class="help-block error-block basic-block">Le type de chambre est obligatoire</span>
+			</div>
+			<!--/Type Chambre -->
+		</div>
+		<div class="col-md-2">
+			<!--Type Chambre -->
+			<div class="form-group" ng-class="{'has-error': vmPro.hotelForm['room_number_'+{{$index}}].$invalid && (vmPro.hotelForm['room_number_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="room_number_{{$index}}">Numéro chambre<span class="required-input">*</span></label>
+				<select id="room_number_{{$index}}" class="form-control" title="Numéro chambre" ng-model="vmPro.product.hotel.occupants[occupant].room_number"
+				    required>
+				<option ng-repeat="option in vmPro.range(vmPro.product.hotel.nb_rooms) track by $index" value="{{$index+1}}">
+					{{$index+1}}
+				</option>
+			</select>
+				<span class="help-block error-block basic-block">Le Numéro chambre est obligatoire</span>
+			</div>
+			<!--/Type Chambre -->
+		</div>
+		<div class="col-md-2">
+			<!--Type Personne -->
+			<div class="form-group" ng-class="{'has-error': vmPro.hotelForm['occupant_type_'+{{$index}}].$invalid && (vmPro.hotelForm['occupant_type_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="occupant_type_{{$index}}">Type Personne<span class="required-input">*</span></label>
+				<select id="occupant_type_{{$index}}" class="form-control" title="Type Personne" selectpicker ng-model="vmPro.product.hotel.occupants[occupant].occupant_type"
+				    required>
+				<option selected>Adulte</option>
+				<option>Enfant</option>
+				<option>Bébé</option>
+			</select>
+				<span class="help-block error-block basic-block">Le Type Personne est obligatoire</span>
+			</div>
+			<!--/Type Personne -->
+		</div>
+		<div class="col-md-2">
+			<!--Supplément -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm['supplement_type_'+{{$index}}].$invalid && (vmPro.hotelForm['supplement_type_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="supplement_type_{{$index}}">Supplément<span class="required-input">*</span></label>
+				<select id="supplement_type_{{$index}}" class="form-control" title="Type Supplément" selectpicker ng-model="vmPro.product.hotel.occupants[occupant].supplement_type"
+				    required>
+				<option selected>Allin Soft</option>
+				<option>Autre</option>
+			</select>
+				<span class="help-block error-block basic-block">Le Supplément est obligatoire</span>
+			</div>
+			<!--/Supplément -->
+		</div>
+		<div class="col-md-2">
+			<!--Supplément-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm['supplement_amount_'+{{$index}}].$invalid && (vmPro.hotelForm['supplement_amount_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="supplement_amount_{{$index}}">Montant Supplément</label>
+				<input type="number" min="0" class="form-control" id="supplement_amount_{{$index}}" name="supplement_amount_{{$index}}" placeholder="Montant"
+				    ng-model="vmPro.product.hotel.occupants[occupant].supplement_amount">
+			</div>
+			<!--/Supplément-->
+		</div>
+		<div class="col-md-1">
+			<!--Majoré (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm['supplement_percentage_'+{{$index}}].$invalid && (vmPro.hotelForm['supplement_percentage_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="supplement_percentage_{{$index}}">Majoré</label>
+				<input type="number" min="0" max="100" class="form-control" id="supplement_percentage_{{$index}}" name="supplement_percentage_{{$index}}"
+				    placeholder="%" ng-model="vmPro.product.hotel.occupants[occupant].supplement_percentage">
+			</div>
+			<!--/Majoré (pourcentage)-->
+		</div>
+		<div class="col-md-1">
+			<!--Réduction (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.hotelForm['discount_'+{{$index}}].$invalid && (vmPro.hotelForm['discount_'+{{$index}}].$dirty || vmPro.hotelForm.$submitted)}">
+				<label for="discount_{{$index}}">Réduction</label>
+				<input type="number" min="0" max="100" class="form-control" id="discount_{{$index}}" name="discount_{{$index}}" placeholder="%"
+				    ng-model="vmPro.product.hotel.occupants[occupant].discount">
+			</div>
+			<!--/Réduction (pourcentage)-->
+		</div>
+		<div class="col-md-10"></div>
+		<div class="col-md-2">
+			<!--Total Occupant-->
+			<div class="form-group">
+				<label for="total_{{$index}}">Total par Occupant</label>
+				<input type="number" class="form-control" id="total_{{$index}}" name="total_{{$index}}" placeholder="Total Occupant" readonly
+				    ng-value="vmPro.hotelPriceByOccupant(occupant)">
+			</div>
+			<!--/Total Occupant-->
+		</div>
+	</div>
+
+	<div class="row" ng-repeat="room in vmPro.getRooms() | orderBy track by $index">
+		<div class="col-md-12" ng-if="$first"><br><br></div>
+		<div class="col-md-4">
+			<!--Prix par chambre-->
+			<div class="form-group has-feedback">
+				<label for="nigth_price_{{$index}}">Prix par Nuit (Chambre {{ room }})</label>
+				<input type="text" class="form-control" id="nigth_price_{{$index}}" name="nigth_price_{{$index}}" placeholder="Prix par Nuit"
+				    ng-value="vmPro.hotelPriceByRoom(room)" readonly>
+			</div>
+			<!--/Prix par chambre -->
+		</div>
+		<div class="col-md-4">
+			<!--Nombre de nuité par chambre -->
+			<div class="form-group has-feedback">
+				<label for="nb_days_{{$index}}">Nombre de nuité (Chambre {{ room }})</label>
+				<input type="text" class="form-control" id="nb_days_{{$index}}" name="nb_days_{{$index}}" placeholder="Nombre de jours" readonly
+				    value="{{ vmPro.getNights(vmPro.product.stay.start_date,vmPro.product.stay.end_date) }}">
+			</div>
+			<!--/Nombre de nuité par chambre-->
+		</div>
+		<div class="col-md-4">
+			<!--Total par chambre -->
+			<div class="form-group has-feedback">
+				<label for="sum_{{$index}}">Total (Chambre {{ room }})</label>
+				<input type="text" class="form-control" id="sum_{{$index}}" name="sum_{{$index}}" placeholder="Total" readonly ng-value="vmPro.hotelTotalPriceByRoom(room)">
+			</div>
+			<!--/Total par chambre -->
+		</div>
+	</div>
+</form>

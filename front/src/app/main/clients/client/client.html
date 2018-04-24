@@ -1,0 +1,18 @@
+<div class="widgets">
+	<div class="row">
+		<div class="col-md-12">
+			<div ba-panel>
+				<ba-wizard submit="vmCl.save(true)" continue="vmCl.save(false)" cancel="vmCl.cancel()">
+					<ba-wizard-step title="Nouveau Client" form="vmCl.newClient" show="true">
+						<div include-with-scope="app/main/clients/client/forms/first_form.html"></div>
+					</ba-wizard-step>
+					<ba-wizard-step title="fixTab" show="false" form="finalForm">
+					</ba-wizard-step>
+					<ba-wizard-step title="Information Personnelle" form="vmCl.personalInfo" show="true" submit-current="vmCl.save()" is-update="vmCl.client_id">
+						<div include-with-scope="app/main/clients/client/forms/second_form.html"></div>
+					</ba-wizard-step>
+				</ba-wizard>
+			</div>
+		</div>
+	</div>
+</div>

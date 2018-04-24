@@ -1,0 +1,210 @@
+<form name="shipTicketForm" novalidate>
+	<div class="row" ng-if="vmPro.product.type==='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.ship_ticket.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.ship_ticket.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.ship_ticket.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+		<div class="col-md-12" ng-if="!vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'">
+			<hr>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-2">
+			<!--Date Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.departure_date_from.$invalid && (vmPro.shipTicketForm.departure_date_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="departure_date_from">Date Départ<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="departure_date_from" name="departure_date_from" placeholder="Date Départ" ng-model="vmPro.product.ship_ticket.departure_date_from"
+				    required>
+			</div>
+			<!--/Date Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.departure_time_from.$invalid && (vmPro.shipTicketForm.departure_time_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="departure_time_from">Heure Départ<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="departure_time_from" name="departure_time_from" placeholder="Heure Départ" ng-model="vmPro.product.ship_ticket.departure_time_from"
+				    required>
+			</div>
+			<!--/Heure Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Port Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.departure_ship_from.$invalid && (vmPro.shipTicketForm.departure_ship_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="departure_ship_from">Port Départ<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="departure_ship_from" name="departure_ship_from" placeholder="Port Départ" ng-model="vmPro.product.ship_ticket.departure_ship_from"
+				    required>
+			</div>
+			<!--/Port Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Date Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.arrival_date_from.$invalid && (vmPro.shipTicketForm.arrival_date_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="arrival_date_from">Date Arrivée<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="arrival_date_from" name="arrival_date_from" placeholder="Date Arrivée" ng-model="vmPro.product.ship_ticket.arrival_date_from"
+				    required>
+			</div>
+			<!--/Date Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.arrival_time_from.$invalid && (vmPro.shipTicketForm.arrival_time_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="arrival_time_from">Heure Arrivée<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="arrival_time_from" name="arrival_time_from" placeholder="Heure Arrivée" ng-model="vmPro.product.ship_ticket.arrival_time_from"
+				    required>
+			</div>
+			<!--/Heure Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Port Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.arrival_ship_from.$invalid && (vmPro.shipTicketForm.arrival_ship_from.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="arrival_ship_from">Port Arrivée<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="arrival_ship_from" name="arrival_ship_from" placeholder="Port Arrivée" ng-model="vmPro.product.ship_ticket.arrival_ship_from"
+				    required>
+			</div>
+			<!--/Port Arrivée-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.unit_price.$invalid && (vmPro.shipTicketForm.unit_price.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="profit">Prix Achat Unitaire</label>
+				<input type="number" ng-change="vmPro.update('ship_ticket','unit_price')" min="0" class="form-control" id="unit_price" name="unit_price"
+				    placeholder="Prix Unitaire" ng-model="vmPro.product.ship_ticket.unit_price" required>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm.profit.$invalid && (vmPro.shipTicketForm.profit.$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="profit">Bénéfice %</label>
+				<input type="number" ng-change="vmPro.update('ship_ticket','profit')" min="1" max="100" class="form-control" id="profit"
+				    name="profit" placeholder="Pourcentage" ng-model="vmPro.product.ship_ticket.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="selling_price" name="selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.ship_ticket.unit_price+vmPro.product.ship_ticket.unit_price*(vmPro.product.ship_ticket.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--S'applique à tous-->
+			<div class="form-group has-feedback pt25">
+				<input type="checkbox" ng-change="vmPro.updateAll('ship_ticket')" id="apply_to_all" name="apply_to_all" ng-model="vmPro.product.ship_ticket.all">
+				<label for="apply_to_all">S'applique à tous</label>
+			</div>
+			<!--/S'applique à tous-->
+		</div>
+	</div>
+
+	<div class="row" ng-repeat="occupant in vmPro.product.occupants track by $index">
+		<div class="col-md-12" ng-init="vmPro.product.ship_ticket.occupants[occupant]= vmPro.product.ship_ticket.occupants[occupant] || {}"><br>{{ ($index+1)+"- "+ vmPro.occupant(occupant).username }}<br><br></div>
+		<div class="col-md-2">
+			<!--Age-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['age_'+{{$index}}].$invalid && (vmPro.shipTicketForm['age_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="age_{{$index}}">Age</label>
+				<input type="number" min="0" max="150" class="form-control" id="age_{{$index}}" name="age_{{$index}}" placeholder="Age" ng-model="vmPro.product.ship_ticket.occupants[occupant].age">
+			</div>
+			<!--/Age-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Achat Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['unit_price_'+{{$index}}].$invalid && (vmPro.shipTicketForm['unit_price_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="unit_price_{{$index}}">Prix Achat Unitaire</label>
+				<input type="number" class="form-control" id="unit_price_{{$index}}" name="unit_price_{{$index}}" placeholder="Prix Achat"
+				    ng-readonly="vmPro.product.ship_ticket.all" ng-model="vmPro.product.ship_ticket.occupants[occupant].unit_price">
+			</div>
+			<!--/Prix Achat Unitaire-->
+		</div>
+		<div class="col-md-2">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['profit_'+{{$index}}].$invalid && (vmPro.shipTicketForm['profit_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="profit_{{$index}}">Bénéfice</label>
+				<input type="number" min="0" max="100" class="form-control" id="profit_{{$index}}" name="profit_{{$index}}" ng-readonly="vmPro.product.ship_ticket.all"
+				    placeholder="%" ng-model="vmPro.product.ship_ticket.occupants[occupant].profit">
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['selling_price_'+{{$index}}].$invalid && (vmPro.shipTicketForm['selling_price_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="selling_price_{{$index}}">Prix Vente Unitaire</label>
+				<input type="number" class="form-control" id="selling_price_{{$index}}" name="selling_price_{{$index}}" placeholder="Prix Vente"
+				    readonly ng-value="vmPro.product.ship_ticket.occupants[occupant].unit_price+vmPro.product.ship_ticket.occupants[occupant].unit_price*(vmPro.product.ship_ticket.occupants[occupant].profit/100)">
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-2">
+			<!--Supplément-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['supplement_amount_'+{{$index}}].$invalid && (vmPro.shipTicketForm['supplement_amount_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="supplement_amount_{{$index}}">Montant Supplément</label>
+				<input type="number" min="0" class="form-control" id="supplement_amount_{{$index}}" name="supplement_amount_{{$index}}" placeholder="Montant"
+				    ng-model="vmPro.product.ship_ticket.occupants[occupant].supplement_amount">
+			</div>
+			<!--/Supplément-->
+		</div>
+		<div class="col-md-1">
+			<!--Majoré (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['supplement_percentage_'+{{$index}}].$invalid && (vmPro.shipTicketForm['supplement_percentage_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="supplement_percentage_{{$index}}">Majoré</label>
+				<input type="number" min="0" max="100" class="form-control" id="supplement_percentage_{{$index}}" name="supplement_percentage_{{$index}}"
+				    placeholder="%" ng-model="vmPro.product.ship_ticket.occupants[occupant].supplement_percentage">
+			</div>
+			<!--/Majoré (pourcentage)-->
+		</div>
+		<div class="col-md-1">
+			<!--Réduction (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.shipTicketForm['discount_'+{{$index}}].$invalid && (vmPro.shipTicketForm['discount_'+{{$index}}].$dirty || vmPro.shipTicketForm.$submitted)}">
+				<label for="discount_{{$index}}">Réduction</label>
+				<input type="number" min="0" max="100" class="form-control" id="discount_{{$index}}" name="discount_{{$index}}" placeholder="%"
+				    ng-model="vmPro.product.ship_ticket.occupants[occupant].discount">
+			</div>
+			<!--/Réduction (pourcentage)-->
+		</div>
+
+		<div class="col-md-10"></div>
+		<div class="col-md-2">
+			<!--Total Occupant-->
+			<div class="form-group">
+				<label for="total_{{$index}}">Total par Occupant</label>
+				<input type="number" class="form-control" id="total_{{$index}}" name="total_{{$index}}" placeholder="Total Occupant" readonly
+				    ng-value="vmPro.shipPriceByOccupant(occupant)">
+			</div>
+			<!--/Total Occupant-->
+		</div>
+	</div>
+</form>

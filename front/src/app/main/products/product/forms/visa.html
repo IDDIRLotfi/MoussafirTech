@@ -1,0 +1,384 @@
+<form name="visaForm" novalidate>
+
+	<div class="row">
+		<div class="col-md-2">
+			<button type="button" class="btn btn-success" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-12"><br><br></div>
+		<div class="col-md-4">
+			<!-- Produits -->
+			<div class="form-group">
+				<label for="user_type">Produits<span class="required-input">*</span></label>
+				<div isteven-multi-select input-model="vmPro.products" output-model="vmPro.product.visa.products" on-item-click="vmPro.updateForms()"
+				    item-label="name" helper-elements="" tick-property="ticked" button-label="name" translation="{nothingSelected: 'Produits'}"
+				    output-properties="name">
+				</div>
+			</div>
+			<!-- /Produits -->
+		</div>
+		<div class="col-md-4">
+			<!--Type Visa-->
+			<div class="form-group" ng-class="{'has-error': vmPro.visaForm.type.$invalid && (vmPro.visaForm.type.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="type">Type Visa<span class="required-input">*</span></label>
+				<select id="type" class="form-control" title="Type" selectpicker ng-model="vmPro.product.visa.type">
+					<option selected>Non Visa</option>
+					<option>Visa Schengen</option>
+					<option>Visa touristique</option>
+					<option>Visa express</option>
+					<option>Visa business</option>
+					<option>Visa d’étude</option>
+					<option>Autre</option>
+				</select>
+			</div>
+			<!--/Type Visa-->
+		</div>
+
+		<div class="col-md-4" ng-if="vmPro.product.visa.type==='Autre'">
+			<!--Type visa Autre-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.new_type.$invalid && (vmPro.visaForm.new_type.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="new_type">Type Visa<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="new_type" name="new_type" placeholder="Type visa" ng-model="vmPro.product.visa.new_type"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+			<!--/Type visa Autre-->
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.contains('Hébergement')">
+		<div class="col-md-12 bold"><br>
+			<hr>Hébergement<br><br></div>
+
+		<div class="col-md-4">
+			<!--Type hébergement-->
+			<div class="form-group" ng-class="{'has-error': vmPro.visaForm.accommodation_type.$invalid && (vmPro.visaForm.accommodation_type.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="accommodation_type">Type hébergement<span class="required-input">*</span></label>
+				<select id="accommodation_type" class="form-control" title="Type" selectpicker ng-model="vmPro.product.visa.hotel.accommodation_type"
+				    ng-change="vmPro.updateForms()">
+					<option selected>Hôtel Voucher</option>
+					<option>Hôtel Non Voucher</option>
+					<option>Autre</option>
+				</select>
+			</div>
+			<!--/Type hébergement-->
+		</div>
+		<div class="col-md-4" ng-if="vmPro.product.visa.hotel.accommodation_type==='Hôtel Voucher' || vmPro.product.visa.hotel.accommodation_type==='Hôtel Non Voucher'">
+			<!-- Nom hotel -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.hotel_name.$invalid && (vmPro.visaForm.hotel_name.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="hotel_name">Nom d'hôtel<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="hotel_name" name="hotel_name" placeholder="Nom d'hôtel" ng-model="vmPro.product.visa.hotel.name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!-- /Nom hotel -->
+		</div>
+		<div ng-if="(vmPro.product.visa.hotel.accommodation_type==='Autre' && vmPro.contains('Hébergement'))">
+			<div class="col-md-4">
+				<!-- Fournisseur -->
+				<div class="form-group">
+					<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+					<multiselect class="full-multiselect" ng-model="vmPro.product.visa.hotel.supplier" options="supplier.username for supplier in vmPro.suppliers"
+					    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+					    ms-header="Fournisseur">
+					</multiselect>
+				</div>
+				<!-- /Fournisseur -->
+			</div>
+
+			<div class="col-md-4">
+				<!-- Compagnie -->
+				<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.visa.hotel.supplier)==='Intermédiaire'">
+					<label for="company">Compagnie<span class="required-input">*</span></label>
+					<multiselect class="full-multiselect" ng-model="vmPro.product.visa.hotel.company" options="company.username for company in vmPro.companies"
+					    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+					    ms-header="Compagnie">
+					</multiselect>
+				</div>
+				<!-- /Compagnie -->
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Hotel Autre-->
+	<div class="row" ng-if="(vmPro.product.visa.hotel.accommodation_type==='Autre' && vmPro.contains('Hébergement'))">
+		<div class="col-md-3">
+			<!-- Nom hotel -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.other_name.$invalid && (vmPro.visaForm.other_name.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="other_name">Nom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="other_name" name="other_name" placeholder="Nom" ng-model="vmPro.product.visa.hotel.name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!-- /Nom hotel -->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.hotel_unit_price.$invalid && (vmPro.visaForm.hotel_unit_price.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="hotel_unit_price">Prix Achat Unitaire</label>
+				<input type="number" min="0" class="form-control" id="hotel_unit_price" name="hotel_unit_price" placeholder="Prix Unitaire"
+				    ng-model="vmPro.product.visa.hotel.unit_price" required>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.hotel_profit.$invalid && (vmPro.visaForm.hotel_profit.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="hotel_profit">Bénéfice %</label>
+				<input type="number" min="1" max="100" class="form-control" id="hotel_profit" name="hotel_profit" placeholder="Pourcentage"
+				    ng-model="vmPro.product.visa.hotel.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="hotel_selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="hotel_selling_price" name="hotel_selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.visa.hotel.unit_price+vmPro.product.visa.hotel.unit_price*(vmPro.product.visa.hotel.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+	</div>
+	<div class="row" ng-if="(vmPro.product.visa.hotel.accommodation_type==='Autre' && vmPro.contains('Hébergement'))">
+		<div class="col-md-4">
+			<hr>
+		</div>
+		<div class="col-md-12"></div>
+		<div class="col-md-2">
+			<!--Quantité -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.hotel_quantity.$invalid && (vmPro.visaForm.hotel_quantity.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="hotel_quantity">Quantité</label>
+				<input type="number" min="1" class="form-control" id="hotel_quantity" name="hotel_quantity" placeholder="Quantité" ng-value="vmPro.product.occupants.length">
+			</div>
+			<!--/Quantité-->
+		</div>
+		<div class="col-md-2">
+			<!--Total -->
+			<div class="form-group has-feedback">
+				<label for="hotel_total_price">Total</label>
+				<input type="number" class="form-control" id="hotel_total_price" name="hotel_total_price" placeholder="Total" ng-model="vmPro.product.visa.hotel.total">
+			</div>
+			<!--/Total-->
+		</div>
+	</div>
+	<!-- /Hotel Autre-->
+
+	<div class="row" ng-if="vmPro.showConsulatForm">
+
+		<div class="col-md-12 bold">
+			<hr>Fournisseur (Consulat)<br> <br>
+		</div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.visa.consulat.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.visa.consulat.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.visa.consulat.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+	</div>
+
+
+	<!-- Consulat -->
+	<div class="row" ng-if="vmPro.showConsulatForm">
+		<div class="col-md-12 bold"><br> Consulat
+			<br><br></div>
+		<div class="col-md-3">
+			<!-- Nom Consulat -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.consulat_name.$invalid && (vmPro.visaForm.consulat_name.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="consulat_name">Nom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="consulat_name" name="consulat_name" placeholder="Nom" ng-model="vmPro.product.visa.consulat.name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!-- /Nom Consulat -->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.connsulat_unit_price.$invalid && (vmPro.visaForm.connsulat_unit_price.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="connsulat_unit_price">Prix Achat Unitaire</label>
+				<input type="number" min="0" class="form-control" id="connsulat_unit_price" name="connsulat_unit_price" placeholder="Prix Unitaire"
+				    ng-model="vmPro.product.visa.consulat.unit_price" required>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.consulat_profit.$invalid && (vmPro.visaForm.consulat_profit.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="consulat_profit">Bénéfice %</label>
+				<input type="number" min="1" max="100" class="form-control" id="consulat_profit" name="consulat_profit" placeholder="Pourcentage"
+				    ng-model="vmPro.product.visa.consulat.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="consulat_selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="consulat_selling_price" name="consulat_selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.visa.consulat.unit_price+vmPro.product.visa.consulat.unit_price*(vmPro.product.visa.consulat.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.showConsulatForm">
+		<div class="col-md-4">
+			<hr>
+		</div>
+		<div class="col-md-12"></div>
+		<div class="col-md-2">
+			<!--Quantité -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.consulat_quantity.$invalid && (vmPro.visaForm.consulat_quantity.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="consulat_quantity">Quantité</label>
+				<input type="number" min="1" class="form-control" id="consulat_quantity" name="consulat_quantity" placeholder="Quantité"
+				    ng-value="vmPro.product.occupants.length">
+			</div>
+			<!--/Quantité-->
+		</div>
+		<div class="col-md-2">
+			<!--Total -->
+			<div class="form-group has-feedback">
+				<label for="consulat_total_price">Total</label>
+				<input type="number" class="form-control" id="consulat_total_price" name="consulat_total_price" placeholder="Total" ng-model="vmPro.product.visa.consulat.total">
+			</div>
+			<!--/Total-->
+		</div>
+	</div>
+	<!-- /Consulat -->
+
+
+	<div class="row" ng-if="vmPro.showRendezVousForm">
+
+		<div class="col-md-12 bold">
+			<hr>Fournisseur (Rendez-vous)<br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.visa.rendez_vous.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.visa.rendez_vous.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.visa.rendez_vous.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+	</div>
+
+	<!-- Rendez-vous -->
+	<div class="row" ng-if="vmPro.showRendezVousForm">
+		<div class="col-md-12 bold"><br> Prendre un Rendez-vous <br><br></div>
+		<div class="col-md-3">
+			<!-- Nom Rendez-vous -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.rendez_vous_name.$invalid && (vmPro.visaForm.rendez_vous_name.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="rendez_vous_name">Nom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="rendez_vous_name" name="rendez_vous_name" placeholder="Nom" ng-model="vmPro.product.visa.rendez_vous.name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!-- /Nom Rendez-vous -->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.rendez_vous_unit_price.$invalid && (vmPro.visaForm.rendez_vous_unit_price.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="rendez_vous_unit_price">Prix Achat Unitaire</label>
+				<input type="number" min="0" class="form-control" id="rendez_vous_unit_price" name="rendez_vous_unit_price" placeholder="Prix Unitaire"
+				    ng-model="vmPro.product.visa.rendez_vous.unit_price" required>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.rendez_vous_profit.$invalid && (vmPro.visaForm.rendez_vous_profit.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="rendez_vous_profit">Bénéfice %</label>
+				<input type="number" min="1" max="100" class="form-control" id="rendez_vous_profit" name="rendez_vous_profit" placeholder="Pourcentage"
+				    ng-model="vmPro.product.visa.rendez_vous.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="rendez_vous_selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="rendez_vous_selling_price" name="rendez_vous_selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.visa.rendez_vous.unit_price+vmPro.product.visa.rendez_vous.unit_price*(vmPro.product.visa.rendez_vous.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.showRendezVousForm">
+		<div class="col-md-4">
+			<hr>
+		</div>
+		<div class="col-md-12"></div>
+		<div class="col-md-2">
+			<!--Quantité -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.visaForm.rendez_vous_quantity.$invalid && (vmPro.visaForm.rendez_vous_quantity.$dirty || vmPro.visaForm.$submitted)}">
+				<label for="rendez_vous_quantity">Quantité</label>
+				<input type="number" min="1" class="form-control" id="rendez_vous_quantity" name="rendez_vous_quantity" placeholder="Quantité"
+				    ng-value="vmPro.product.occupants.length">
+			</div>
+			<!--/Quantité-->
+		</div>
+		<div class="col-md-2">
+			<!--Total -->
+			<div class="form-group has-feedback">
+				<label for="rendez_vous_total_price">Total</label>
+				<input type="number" class="form-control" id="rendez_vous_total_price" name="rendez_vous_total_price" placeholder="Total"
+				    ng-model="vmPro.product.visa.rendez_vous.total">
+			</div>
+			<!--/Total-->
+		</div>
+	</div>
+	<!-- /Rendez-vous -->
+
+	<div class="row" ng-if="vmPro.product.occupants.length>0">
+		<div class="col-md-12"><br>
+			<hr>Liste des occupants <br><br></div>
+		<div class="col-md-12">
+			<ol>
+				<li class="p10" ng-repeat="occupant in vmPro.product.occupants track by $index">
+					{{ vmPro.occupant(occupant).username }}
+				</li>
+			</ol>
+		</div>
+	</div>
+</form>

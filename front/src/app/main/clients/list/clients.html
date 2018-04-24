@@ -1,0 +1,80 @@
+<div class="row">
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary float-left" ui-sref="add_client"><i class="fa fa-plus"></i> Ajouter Client</button>
+	</div>
+	<div class="col-md-12">
+		<br>
+	</div>
+</div>
+<div id="clients">
+	<div>
+		<div class="panel table-panel animated zoomIn" zoom-in="">
+			<div class="panel-body">
+
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Recherche client" ng-model="vmCls.queryString">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<multiselect class="full-multiselect" ng-model="vmCls.selectedTypes" options="type for type in vmCls.clientTypes" data-multiple="true"
+							    scroll-after-rows="5" filter-after-rows="5" ms-header="Type clients">
+							</multiselect>
+						</div>
+					</div>
+					<div class="col-md-3" ng-if="current_user.role !== 'agent'">
+						<div class="form-group">
+							<multiselect class="full-multiselect" ng-model="vmCls.selectedUsers" options="user.email for user in vmCls.users" data-compare-by="_id"
+							    data-order-options-by="model.email" data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Ajouté Par">
+							</multiselect>
+						</div>
+					</div>
+					<div class="col-md-2 pt5">
+						<input type="checkbox" ng-model="vmCls.withRest">
+						<label for="manager" class="soft">Avec Reste </label>
+					</div>
+					<div class="col-md-1">
+						<button type="button" class="btn btn-info float-left" ng-click="vmCls.filter()"><i class="fa fa-filter "></i> Filter</button>
+					</div>
+				</div>
+				<div>
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th style="text-align:center">Numéro</th>
+									<th>Type</th>
+									<th>Nom Complet</th>
+									<th>Prénom</th>
+									<th>Nom</th>
+									<th>Total Vente (DZD)</th>
+									<th>Total Reste (DZD)</th>
+									<th></th>
+								</tr>
+								<tr ng-repeat="client in vmCls.filteredClients | orderBy:'-date' | filter:vmCls.queryString track by $index">
+									<td>{{ $index+1 }}</td>
+									<td>{{ client.type }}</td>
+									<td>{{ client.username }}</td>
+									<td>{{ client.first_name }}</td>
+									<td>{{ client.last_name }}</td>
+									<td>{{ client.sales | number : 0}}</td>
+									<td>{{ client.rest | number : 0}}</td>
+									<td>
+										<button type="button" class="btn btn-danger m5 float-right margin-left" ng-click="vmCls.deleteClient(client._id)">Supprimer
+										</button>
+										<button type="button" class="btn btn-warning m5 float-right margin-left" ui-sref="edit_client({id:client._id})">Modifier
+										</button>
+										<button type="button" class="btn btn-info m5 float-right margin-left" ng-click="vmCls.getClientProducts(client)">Produits
+										</button>
+									</td> 
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

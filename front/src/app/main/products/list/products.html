@@ -1,0 +1,95 @@
+<div class="row" style="text-align:center !important">
+	<div class="col-md-1" style="width:5%!important"></div>
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-2 total-info">
+		<div class="col-md-12">Total Reçu</div>
+		<div class="col-md-12 price">{{ vmPros.recievedAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-red">
+		<div class="col-md-12">Total Reste</div>
+		<div class="col-md-12 price">{{ vmPros.restAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-black">
+		<div class="col-md-12">Total Vente</div>
+		<div class="col-md-12 price">{{ vmPros.saleAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2">
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary float-left" ui-sref="add_product"><i class="fa fa-plus"></i> Ajouter Produit</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12"><br></div>
+	<div class="col-md-12">
+		<div id="products">
+			<div>
+				<div class="panel table-panel animated zoomIn" zoom-in="">
+					<div class="panel-body">
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Recherche Produit</label>
+									<input type="text" class="form-control" placeholder="Recherche Produit" ng-model="vmPros.queryString">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Type Produits</label>
+									<multiselect class="full-multiselect" ng-model="vmPros.selectedTypes" options="product for product in vmPros.productTypes"
+									    data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Type Produits">
+									</multiselect>
+								</div>
+							</div>
+							<div class="col-md-3" ng-if="current_user.role !== 'agent'">
+								<div class="form-group">
+									<label>Ajouté Par</label>
+									<multiselect class="full-multiselect" ng-model="vmPros.selectedUsers" options="user.email for user in vmPros.users" data-compare-by="_id"
+									    data-order-options-by="model.email" data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Liste des Utilisateurs">
+									</multiselect>
+								</div>
+							</div>
+							<div class="col-md-2 mt21">
+								<button type="button" class="btn btn-info" ng-click="vmPros.filter()"><i class="fa fa-filter "></i> Filter</button>
+							</div>
+						</div>
+						<div>
+							<div class="table-responsive">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th style="text-align:center">Numéro</th>
+											<th>Type</th>
+											<th>Client</th>
+											<th>Total vente (DZD)</th>
+											<th>Total reste (DZD)</th>
+											<th></th>
+										</tr>
+										<tr ng-repeat="product in vmPros.filtered_products | orderBy:'date' | filter:vmPros.queryString track by $index">
+											<td>{{ $index+1 }}</td>
+											<td>{{ product.type }}</td>
+											<td>{{ product.client.username }}</td>
+											<td>{{ product.total || 0 | number : 0}}</td>
+											<td>{{ ((product.total || 0) - (product.paid_amount || 0)) | number : 0}}</td>
+											<td>
+												<button type="button" class="btn btn-danger m5 float-right margin-left" ng-click="vmPros.deleteProduct(product._id)">Supprimer
+												</button>
+												<button type="button" class="btn btn-warning m5 float-right margin-left" ui-sref="edit_product({id:product._id})">Modifier
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

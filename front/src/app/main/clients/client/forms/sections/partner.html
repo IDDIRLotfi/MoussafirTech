@@ -1,0 +1,31 @@
+<div ng-if="vmCl.showPartner" class="row" ng-repeat="number in vmCl.range(vmCl.nbPartner) track by $index">
+	<div class="col-md-12 bold">Partenaire {{$index+1}}<br><br></div>
+	<div class="col-md-4">
+		<div class="form-group" ng-class="{'has-error': vmCl.personalInfo['type_'+_{{$index}}].$invalid && (vmCl.personalInfo['type_'+_{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="user_type_{{$index}}">Type Partenaire<span class="required-input">*</span></label>
+			<select id="user_type_{{$index}}" class="form-control" title="Type" selectpicker ng-model="vmCl.user.partner[$index].type">
+                                            <option selected>Adulte (+12 ans)</option>
+                                            <option>Enfant (-12 ans)</option>
+                                            <option>bébé (-2 ans)</option>
+                                            <option>Autre</option>
+                                        </select>
+			<span class="help-block error-block basic-block">Le type est obligatoire</span>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div styleclass="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['partner_username_'+{{$index}}].$invalid && (vmCl.personalInfo.['partner_username_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="partner_username_{{$index}}" style="    font-weight: 400;">Nom complet<span class="required-input">*</span></label>
+			<input type="text" class="form-control" id="partner_username_{{$index}}" name="partner_username_{{$index}}" placeholder="Nom complet" ng-model="vmCl.user.partner[$index].username"
+			    required>
+			<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div styleclass="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['partner_birthday_'+{{$index}}].$invalid && (vmCl.personalInfo['partner_birthday_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+			<label for="partner_birthday_{{$index}}" style="    font-weight: 400;">Date de Naissance<span class="required-input">*</span></label>
+			<input type="date" class="form-control" id="username_{{$index}}" name="username_{{$index}}" placeholder="Date de Naissance" ng-model="vmCl.user.partner[$index].birthday"
+			    required>
+			<span class="help-block error-block basic-block">La date de naissance est obligatoire</span>
+		</div>
+	</div>
+</div>

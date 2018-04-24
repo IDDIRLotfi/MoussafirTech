@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md-12"><br><br><br></div>
+		<div class="col-md-6" ng-if="current_user.role === 'admin' || current_user.role === 'super-admin'">
+			<div class="col-md-12 total-info flat-black no-padding" ui-sref="users_list"><span class="home-buttons" translate="home.administration"></span></div>
+		</div>
+		<div class="col-md-6" ng-if="current_user.role === 'admin' || current_user.role === 'super-admin'">
+			<div class="col-md-12 total-info flat-violet no-padding" ui-sref="balance"><span class="home-buttons" translate="home.total_balance"></span></div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-12 total-info no-padding" ui-sref="products_list"><span class="home-buttons" translate="home.transactions"></span></div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-12 total-info flat-red no-padding" ui-sref="suppliers_list"><span class="home-buttons" translate="home.suppliers"></span></div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-12  total-info flat-green no-padding" ui-sref="clients_list"><span class="home-buttons" translate="home.clients"></span></div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-12 total-info flat-orange no-padding" ui-sref="trips_list"><span class="home-buttons" translate="home.trips"></span></div>
+		</div>
+	</div>
+</div>

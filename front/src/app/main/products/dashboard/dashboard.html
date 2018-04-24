@@ -1,0 +1,111 @@
+<div class="row" style="text-align:center !important">
+	<div class="col-md-1" style="width:5%!important"></div>
+	<div class="col-md-2 total-info">
+		<div class="col-md-12">Total Reçu</div>
+		<div class="col-md-12 price">{{ vmDs.recievedAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-red">
+		<div class="col-md-12">Total Reste</div>
+		<div class="col-md-12 price">{{ vmDs.restAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-green">
+		<div class="col-md-12">Total Bénéfice</div>
+		<div class="col-md-12 price">{{ vmDs.profitAmount() || 0 | number : 0}} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-orange">
+		<div class="col-md-12">Total Achat</div>
+		<div class="col-md-12 price">{{ vmDs.purchaseAmount() || 0 | number : 0 }} DZD</div>
+	</div>
+	<div class="col-md-2 total-info flat-black">
+		<div class="col-md-12">Total Vente</div>
+		<div class="col-md-12 price">{{ vmDs.saleAmount() || 0 | number : 0}} DZD</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12"><br><br></div>
+	<div class="col-md-12">
+		<div id="products">
+			<div>
+				<div class="panel table-panel animated zoomIn" zoom-in="">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-2">
+								<!--Date de début-->
+								<div class="form-group">
+									<label for="from_date">Date de</label>
+									<input type="date" class="form-control" id="from_date" name="from_date" placeholder="Date de" ng-model="vmDs.from_date">
+								</div>
+								<!--/Date de début-->
+							</div>
+							<div class="col-md-2">
+								<!--Date de fin-->
+								<div class="form-group">
+									<label for="to_date">Date vers</label>
+									<input type="date" class="form-control" id="to_date" name="to_date" placeholder="Date vers" ng-model="vmDs.to_date">
+								</div>
+								<!--/Date de fin-->
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label>Recherche Produit</label>
+									<input type="text" class="form-control" placeholder="Recherche Produit" ng-model="vmDs.queryString">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Type Produits</label>
+									<multiselect class="full-multiselect" ng-model="vmDs.selectedTypes" options="product for product in vmDs.productTypes" data-multiple="true"
+									    scroll-after-rows="5" filter-after-rows="5" ms-header="Type Produits">
+									</multiselect>
+								</div>
+							</div>
+							<div class="col-md-2" ng-if="current_user.role !== 'agent'">
+								<div class="form-group">
+									<label>Ajouter Par</label>
+									<multiselect class="full-multiselect" ng-model="vmDs.selectedUsers" options="user.email for user in vmDs.users" data-compare-by="_id"
+									    data-order-options-by="model.email" data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Liste des Utilisateurs">
+									</multiselect>
+								</div>
+							</div>
+
+							<div class="col-md-1 mt21">
+								<button type="button" class="btn btn-info" ng-click="vmDs.filter();vmDs.filtered=true"><i class="fa fa-filter "></i> Filter</button>
+							</div>
+						</div>
+						<div>
+							<div class="table-responsive">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th style="text-align:center">Numéro</th>
+											<th>Type</th>
+											<th>Client</th>
+											<th>Total vente (DZD)</th>
+											<th>Total reste (DZD)</th>
+											<th></th>
+										</tr>
+										<tr ng-if="vmDs.to_date && vmDs.from_date && vmDs.filtered" ng-repeat="product in vmDs.filtered_products | orderBy:'date' | filter:vmDs.queryString track by $index">
+											<td>{{ $index+1 }}</td>
+											<td>{{ product.type }}</td>
+											<td>{{ product.client.username }}</td>
+											<td>{{ product.total || 0 | number : 0}}</td>
+											<td>{{ (product.total || 0) - (product.paid_amount || 0) | number : 0}}</td>
+											<td>
+												<button type="button" class="btn btn-danger m5 float-right margin-left" ng-click="vmDs.deleteProduct(product._id)">Supprimer
+												</button>
+												<button type="button" class="btn btn-warning m5 float-right margin-left" ui-sref="edit_product({id:product._id})">Modifier
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

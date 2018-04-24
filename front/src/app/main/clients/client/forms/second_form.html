@@ -1,0 +1,178 @@
+<form name="vmCl.personalInfo" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<!--Nom-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.last_name.$invalid && (vmCl.personalInfo.last_name.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="last_name">Nom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom" ng-model="vmCl.user.last_name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!--/Nom-->
+		</div>
+		<div class="col-md-6">
+			<!-- Prenom -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.first_name.$invalid && (vmCl.personalInfo.first_name.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="first_name">Prénom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prénom" ng-model="vmCl.user.first_name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le prénom est obligatoire</span>
+			</div>
+			<!-- /Prenom -->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<!--date naissance-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.birthday.$invalid && (vmCl.personalInfo.birthday.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="birthday">Date naissance<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="birthday" name="birthday" placeholder="Date naissance" ng-model="vmCl.user.birthday"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">La date de naissance est obligatoire</span>
+			</div>
+			<!--/date naissance-->
+		</div>
+		<div class="col-md-6">
+			<!-- Lieu de Naissance -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.birthplace.$invalid && (vmCl.personalInfo.birthplace.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="birthplace">Lieu de naissance<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="birthplace" name="birthplace" placeholder="Lieu de naissance" ng-model="vmCl.user.birthplace"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Lieu de naissance est obligatoire</span>
+			</div>
+			<!-- /Lieu de Naissance -->
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<!--Etat-->
+			<div class="form-group" ng-class="{'has-error': vmCl.personalInfo.state.$invalid && (vmCl.personalInfo.state.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="state">Etat Civile<span class="required-input">*</span></label>
+				<select id="state" class="form-control" title="Etat Civile" selectpicker ng-model="vmCl.user.state">
+					<option selected>Mr</option>
+					<option>Mme</option>
+					<option>Mlle</option>
+				</select>
+			</div>
+			<!--/Etat-->
+		</div>
+		<div class="col-md-6">
+			<!-- Nationalité -->
+			<div class="form-group" ng-class="{'has-error': vmCl.personalInfo.nationality.$invalid && (vmCl.personalInfo.nationality.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="nationality">Nationalité<span class="required-input">*</span></label>
+				<select id="nationality" class="form-control" title="Nationalité" selectpicker ng-model="vmCl.user.nationality" ng-required="false">
+                                            <option selected>Algérien</option>
+                                            <option>Autre</option>
+                                        </select>
+				<span class="help-block error-block basic-block">La nationalité est obligatoire</span>
+			</div>
+			<!-- /Nationalité -->
+		</div>
+	</div>
+
+	<!--Adresse-->
+	<div include-with-scope="app/main/clients/client/forms/sections/address.html"></div>
+	<!--/Adresse-->
+
+	<!-- Passport-->
+	<div include-with-scope="app/main/clients/client/forms/sections/passport.html"></div>
+	<!-- /Passport-->
+
+	<div class="row">
+
+		<div class="col-md-12"> <br> <br></div>
+		<div class="col-md-6">
+			<!-- Carte Nationale-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.id_number.$invalid && (vmCl.personalInfo.id_number.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="id_number">Carte nationale<span class="required-input">*</span></label>
+				<input type="id_number" class="form-control" id="id_number" name="id_number" placeholder="N° Carte nationale" ng-model="vmCl.user.id_number"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">N° Carte nationale est obligatoire</span>
+			</div>
+			<!-- /Carte Nationale-->
+		</div>
+		<div class="col-md-6">
+			<!-- Permis de conduite-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.licence_id.$invalid && (vmCl.personalInfo.licence_id.$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="licence_id">permis de conduite</label>
+				<input type="licence_id" class="form-control" id="licence_id" name="licence_id" placeholder="N° permis de conduite " ng-model="vmCl.user.licence_id">
+			</div>
+			<!-- /Permis de conduite-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12"> <br> <br></div>
+		<div class="col-md-6">
+			<!--Numéro Téléphone-->
+			<div ng-repeat="phone in vmCl.user.phone_numbers track by $index" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['phone_number_'+{{$index}}].$invalid && (vmCl.personalInfo['phone_number_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="phone_number_{{$index}}" class="full">Numéro Téléphone {{ $index+1 }}<span class="required-input" ng-if="$first">*</span>
+					<add-button is-last="$last" ng-model="vmCl.user.phone_numbers" max="3" index="$index"></add-button>				
+				</label>
+				<input ng-if="$first" type="text" class="form-control" id="phone_number_{{$index}}" name="phone_number_{{$index}}" placeholder="Numéro Téléphone"
+				    ng-model="vmCl.user.phone_numbers[$index]" ng-required="false">
+				<input ng-if="!$first" type="text" class="form-control" id="phone_number_{{$index}}" name="phone_number_{{$index}}" placeholder="Numéro Téléphone"
+				    ng-model="vmCl.user.phone_numbers[$index]">
+				<span class="help-block error-block basic-block">Le Numéro Téléphone est obligatoire</span>
+			</div>
+			<!--/Numéro Téléphone-->
+		</div>
+		<div class="col-md-6">
+			<!--Numéro Fax-->
+			<div ng-repeat="fax in vmCl.user.fax_numbers track by $index" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['fax_number_'+{{$index}}].$invalid && (vmCl.personalInfo['fax_number_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="fax_number_{{$index}}" class="full">Numéro Fax {{ $index+1 }}<span class="required-input" ng-if="$first">*</span>
+					<add-button is-last="$last" ng-model="vmCl.user.fax_numbers" max="3" index="$index"></add-button>		
+				</label>
+				<input type="text" class="form-control" id="fax_number_{{$index}}" name="fax_number_{{$index}}" placeholder="Numéro Téléphone"
+				    ng-model="vmCl.user.fax_numbers[$index]">
+			</div>
+			<!--/Numéro Fax-->
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<!--Site Web-->
+			<div ng-repeat="web_site in vmCl.user.web_sites track by $index" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['web_site_'+{{$index}}].$invalid && (vmCl.personalInfo['web_site_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="web_site_{{$index}}" class="full">web_site {{ $index+1 }}
+					<add-button is-last="$last" ng-model="vmCl.user.web_sites" max="3" index="$index"></add-button>
+				</label>
+				<input type="text" class="form-control" id="web_site_{{$index}}" name="web_site_{{$index}}" placeholder="web_site" ng-model="vmCl.user.web_sites[$index]">
+			</div>
+			<!--/Site Web-->
+		</div>
+		<div class="col-md-6">
+			<!-- Email -->
+			<div ng-repeat="email in vmCl.user.emails track by $index" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['email_'+{{$index}}].$invalid && (vmCl.personalInfo['email_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="email_{{$index}}" class="full">Email {{ $index+1 }}			
+					<add-button is-last="$last" ng-model="vmCl.user.emails" max="3" index="$index"></add-button>
+				</label>
+				<input type="text" class="form-control" id="email_{{$index}}" name="email_{{$index}}" placeholder="Email" ng-model="vmCl.user.emails[$index]">
+			</div>
+			<!-- /Email -->
+		</div>
+	</div>
+
+	<div class="row" ng-if="false">
+		<div class="col-md-6">
+
+			<button type="button" class="btn btn-primary" style="margin-top:70px" ng-click="vmCl.showPartner=!vmCl.showPartner;vmCl.nbPartner=0">Ajouter Partenaire</button>
+
+			<!-- Nombre Partenaire -->
+			<div ng-if="vmCl.showPartner" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo.nbPartner.$invalid && (vmCl.personalInfo.nbPartner.$dirty || vmCl.personalInfo.$submitted)}">
+				<br>
+				<label for="nbPartner">Nombre de Partenaire</label>
+				<input type="number" min="0" class="form-control" id="nbPartner" name="nbPartner" placeholder="Nombre de Partenaire" ng-model="vmCl.nbPartner">
+			</div>
+			<!-- /Nombre Partenaire -->
+		</div>
+	</div>
+
+	<!-- Partner-->
+	<!--<div include-with-scope="app/main/clients/client/forms/sections/partner.html" ng-if="false"></div>-->
+	<!-- /Partner-->
+
+</form>

@@ -1,0 +1,11 @@
+<div class="row">
+	<div class="col-md-6" ng-repeat="address in vmCl.user.addresses track by $index">
+		<div class="form-group">
+			<label for="address_{{$index}}" class="full">Adresse {{$index+1}}
+				<add-button is-last="$last" ng-model="vmCl.user.addresses" max="3" index="$index"></add-button>
+			</label>
+			<input name="address_{{$index}}" class="form-control" places-auto-complete size=80 ng-model="vmCl.user.addresses[$index]"
+			    types="['geocode']" />
+		</div>
+	</div>
+</div>

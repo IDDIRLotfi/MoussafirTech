@@ -1,0 +1,79 @@
+<hr>
+<form name="vmPro.newSupplier" novalidate>
+	<div class="row">
+		<div class="col-md-6" ng-class="{'col-md-3': vmPro.new_supplier.activity==='Autre'}">
+			<div class="form-group" ng-class="{'has-error': vmPro.newSupplier.activity.$invalid && (vmPro.newSupplier.activity.$dirty || vmPro.newSupplier.$submitted)}"
+			    ng-required="false">
+				<label for="activity">Type Fournisseur (Suivant l’activité) <span class="required-input">*</span></label>
+				<select id="activity" class="form-control" title="Type Fournisseur (Suivant l’activité)" selectpicker ng-model="vmPro.new_supplier.activity">
+					<option selected>Agence de voyage</option>
+					<option>Plateforme B to B</option>
+					<option>Hôtel</option>
+					<option>Compagnie aérienne</option>
+					<option>Compagnie maritime</option>
+					<option>Compagnie transport routière</option>
+					<option>Compagnie d’assurance</option>
+					<option>Entreprise</option>
+					<option>Amadeus</option>
+					<option>Autre</option>
+				</select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+		</div>
+		<div class="col-md-3" ng-if="vmPro.new_supplier.activity==='Autre'">
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.newSupplier.new_activity.$invalid && (vmPro.newSupplier.new_activity.$dirty || vmPro.newSupplier.$submitted)}">
+				<label for="new_activity">Saisir le Type<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="new_activity" name="new_activity" placeholder="Saisir le Type" ng-model="vmPro.new_supplier.new_activity"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le type Fournisseur est obligatoire</span>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.newSupplier.supplier_name.$invalid && (vmPro.newSupplier.supplier_name.$dirty || vmPro.newSupplier.$submitted)}">
+				<label for="supplier_name">Nom Fournisseur<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Nom Fournisseur" ng-model="vmPro.new_supplier.username"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le Nom Fournisseur est obligatoire</span>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.new_supplier.activity==='Autre'">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{'has-error': vmPro.newSupplier.type.$invalid && (vmPro.newSupplier.type.$dirty || vmPro.newSupplier.$submitted)}"
+			    ng-required="false">
+				<label for="user_type">Type de Produit <span class="required-input">*</span></label>
+				<div isteven-multi-select input-model="vmPro.supplierProducts" output-model="vmPro.new_supplier.products" helper-elements=""
+				    item-label="name" tick-property="ticked" button-label="name" translation="vmPro.translateProducts" output-properties="name">
+				</div>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+
+		</div>
+		<div class="col-md-3">
+			<div ng-if="vmPro.contains('Autre')" class="form-group has-feedback" ng-class="{'has-error': vmPro.newSupplier.new_product.$invalid && (vmPro.newSupplier.new_product.$dirty || vmPro.newSupplier.$submitted)}">
+				<label for="nbPart">Autre Produit</label>
+				<input type="text" class="form-control" id="new_product" name="new_product" placeholder="Type Produit" ng-model="vmPro.new_supplier.new_product">
+			</div>
+		</div>
+		<div class="col-md-6" ng-class="{'col-md-3':vmPro.contains('Autre')}">
+			<div class="form-group" ng-class="{'has-error': vmPro.type.activity.$invalid && (vmPro.newSupplier.type.$dirty || vmPro.newSupplier.$submitted)}"
+			    ng-required="false">
+				<label for="type">Type Fournisseur<span class="required-input">*</span></label>
+				<select id="type" class="form-control" title="Type Fournisseur" selectpicker ng-model="vmPro.new_supplier.type" ng-required="false">
+					<option selected>Intermédiaire</option>
+					<option>Principale</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<button type="button" class="btn btn-primary float-right margin-left" ng-click="vmPro.saveSupplier()">Ajouter</button>
+			<button type="button" class="btn btn-danger float-right" ng-click="vmPro.addSupplier=false">Annuler</button>
+		</div>
+	</div>
+</form>
+<hr>

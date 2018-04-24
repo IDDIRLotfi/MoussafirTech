@@ -1,0 +1,38 @@
+<div class="auth-page" ng-if="vm.checkTrial()" style="z-index:900000; display:none" ng-class="{'showAuth': vm.checkTrial()}">
+	<main class="auth-main">
+		<div class="auth-block">
+			<h1>la version d'évaluation a expiré, veuiller contacter El Moussafir Tech</h1>
+
+			<div class="auth-sep"><span><span>El Moussafir Tech</span></span>
+			</div>
+		</div>
+	</main>
+</div>
+<!--// temporary and silly solution-->
+<div ng-if="!vm.hide">
+	<div class="auth-page" ng-if="!vm.getKey()" ng-class="{'showAuth':  !vm.getKey()}">
+		<main class="auth-main">
+			<div class="auth-block">
+				<h1>Inserer la clés du logiciel pour pouvoir l'utiliser</h1>
+
+				<form class="form-horizontal" ng-submit="vm.verifyKey()">
+					<div class="form-group">
+						<label for="key" class="col-sm-12" style="color:#fff">La clé</label>
+
+						<div class="col-sm-12">
+							<input type="text" class="form-control" ng-model="vm.key" id="key" placeholder="Entrer la clé">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button type="button" class="btn btn-default btn-auth"  ng-click="vm.verifyKey()">Valider</button>
+						</div>
+					</div>
+				</form>
+
+				<div class="auth-sep"><span><span>El Moussafir Tech</span></span>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>

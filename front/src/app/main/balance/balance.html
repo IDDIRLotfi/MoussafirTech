@@ -1,0 +1,62 @@
+<div class="row filter-panel">
+	<div class="col-md-2">
+		<!--Date de début-->
+		<div class="form-group">
+			<label for="from_date">Date de</label>
+			<input type="date" class="form-control" id="from_date" name="from_date" placeholder="Date de" ng-model="balVm.from_date">
+		</div>
+		<!--/Date de début-->
+	</div>
+	<div class="col-md-2">
+		<!--Date de fin-->
+		<div class="form-group">
+			<label for="to_date">Date vers</label>
+			<input type="date" class="form-control" id="to_date" name="to_date" placeholder="Date vers" ng-model="balVm.to_date">
+		</div>
+		<!--/Date de fin-->
+	</div>
+	<div class="col-md-3" ng-if="current_user.role !== 'agent'">
+		<div class="form-group">
+			<label>Ajouter Par</label>
+			<multiselect class="full-multiselect" ng-model="balVm.selectedUsers" options="user.email for user in balVm.users" data-compare-by="_id"
+			    data-order-options-by="model.email" data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Liste des Utilisateurs">
+			</multiselect>
+		</div>
+	</div>
+	<div class="col-md-2 mt21">
+		<button type="button" class="btn btn-info" ng-click="balVm.filter()"><i class="fa fa-filter "></i> Filter</button>
+	</div>
+</div>
+<br>
+<div class="row" style="text-align:center !important">
+	<div class="col-md-6 ">
+		<div class="total-info">
+			<div translate="balance.paid"></div>
+			<div class="price">{{ (balVm.paid_amount) || 0 | number : 0}} DZD</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="total-info flat-red">
+			<div translate="balance.rest"></div>
+			<div class="price">{{ (balVm.total - balVm.paid_amount) || 0 | number : 0}} DZD</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="total-info flat-green">
+			<div translate="balance.profit"></div>
+			<div class="price">{{ (balVm.profit || 0) | number : 0}} DZD</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="total-info flat-orange">
+			<div  translate="balance.purchase"></div>
+			<div class="price">{{ (balVm.purchase_price || 0) | number : 0 }} DZD</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="total-info flat-black">
+			<div translate="balance.total"></div>
+			<div class="price">{{ (balVm.total || 0) | number : 0}} DZD</div>
+		</div>
+	</div>
+</div>

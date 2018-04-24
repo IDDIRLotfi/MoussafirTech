@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary float-left" ui-sref="add_supplier"><i class="fa fa-plus"></i> Ajouter Fournisseur</button>
+	</div>
+	<div class="col-md-12">
+		<br>
+	</div>
+</div>
+<div id="suppliers">
+	<div>
+		<div class="panel table-panel animated zoomIn" zoom-in="">
+			<div class="panel-body">
+
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Recherche fournisseur" ng-model="vmSups.queryString">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<multiselect class="full-multiselect" ng-model="vmSups.selectedTypes" options="supplier for supplier in vmSups.supplierTypes"
+							    data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Type fournisseurs">
+							</multiselect>
+						</div>
+					</div>
+					<div class="col-md-3" ng-if="current_user.role !== 'agent'">
+						<div class="form-group">
+							<multiselect class="full-multiselect" ng-model="vmSups.selectedUsers" options="user.email for user in vmSups.users" data-compare-by="_id"
+							    data-order-options-by="model.email" data-multiple="true" scroll-after-rows="5" filter-after-rows="5" ms-header="Ajouté Par">
+							</multiselect>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="button" class="btn btn-info" ng-click="vmSups.filter()"><i class="fa fa-filter "></i> Filter</button>
+					</div>
+				</div>
+				<div>
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th style="text-align:center">Numéro</th>
+									<th>Activité</th>
+									<th>Nom Complet</th>
+									<th>Type</th>
+									<th>Total Achat (DZD)</th>
+									<th></th>
+								</tr>
+								<tr ng-repeat="supplier in vmSups.filteredSuppliers  | orderBy:'date' | filter:vmSups.queryString track by $index">
+									<td>{{ $index+1 }}</td>
+									<td>{{ supplier.activity }}</td>
+									<td>{{ supplier.username }}</td>
+									<td>{{ supplier.type || 'Principal'}}</td>
+									<td>{{ supplier.purchases | number : 0}}</td>
+									<td>
+										<button type="button" class="btn btn-danger m5 float-right margin-left" ng-click="vmSups.deleteSupplier(supplier._id)">Supprimer
+										</button>
+										<button type="button" class="btn btn-warning m5 float-right margin-left" ui-sref="edit_supplier({id:supplier._id})">Modifier
+										</button>
+										<button type="button" class="btn btn-info m5 float-right margin-left" ng-click="vmSups.getSupplierProducts(supplier)">Produits
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,160 @@
+<form name="vmPro.productForm" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<!--Type Produit-->
+			<div class="form-group" ng-class="{'has-error': vmPro.productForm.type.$invalid && (vmPro.productForm.type.$dirty || vmPro.productForm.$submitted)}">
+				<label for="type">Type de Produit<span class="required-input">*</span></label>
+				<select id="type" class="form-control" title="Type" selectpicker ng-model="vmPro.product.type">
+					<option selected>Réservation d’hôtel</option>
+					<option>Location</option>
+					<option>Billet d’avion</option>
+					<option>Assurance de voyage</option>
+					<option>Transport routier</option>
+					<option>Transport maritime</option>
+					<option>Traitement de dossier de visa</option>
+					<option>Autre</option> 
+				</select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+			<!--/Type Produit-->
+		</div>
+		<div class="col-md-6">
+			<!--Nom Produit-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.productForm.name.$invalid && (vmPro.productForm.name.$dirty || vmPro.productForm.$submitted)}">
+				<label for="name">Nom de Produit<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Nom de Produit" ng-model="vmPro.product.name"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom de produit est obligatoire</span>
+			</div>
+			<!--/Nom Produit-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<!-- Client -->
+			<div class="form-group">
+				<label for="client">Client<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.client" options="client.username for client in vmPro.clients"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Client">
+				</multiselect>
+			</div>
+			<!-- /Client -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Occupants -->
+			<div class="form-group">
+				<label for="user_type">Occupants<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.occupants" options="client.username for client in vmPro.clients"
+				    data-order-options-by="-model.date" data-multiple="true" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5" ms-header="Occupants">
+				</multiselect>
+			</div>
+			<!-- /Occupants -->
+		</div>
+
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addClient=!vmPro.addClient">{{vmPro.addClient?'Cacher':'Ajouter Nouveau Client'}}</button>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addClient" include-with-scope="app/main/products/product/forms/new_client.html"></div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="destination">Destination</label>
+				<input name="destination" class="form-control" places-auto-complete size=80 types="['geocode']" ng-model="vmPro.product.destination"
+				/>
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			<!--Date de début-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.productForm.start_date.$invalid && (vmPro.productForm.start_date.$dirty || vmPro.productForm.$submitted)}">
+				<label for="start_date">Date de début de séjour <span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="start_date" name="start_date" placeholder="Date de début" ng-model="vmPro.product.stay.start_date"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">La Date de début est obligatoire</span>
+			</div>
+			<!--/Date de début-->
+		</div>
+		<div class="col-md-3">
+			<!--Date de fin-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.productForm.end_date.$invalid && (vmPro.productForm.end_date.$dirty || vmPro.productForm.$submitted)}">
+				<label for="end_date">Date de fin de séjour <span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="end_date" name="end_date" placeholder="Date de fin" ng-model="vmPro.product.stay.end_date"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">La Date de fin est obligatoire</span>
+			</div>
+			<!--/Date de fin-->
+		</div>
+	</div>
+	<div class="row" ng-if="vmPro.product.type==='Réservation d’hôtel' || vmPro.product.type==='Location'">
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<!--Nb de Jour -->
+			<div class="form-group has-feedback">
+				<label for="nb_days">Nombre de jours</label>
+				<input type="text" class="form-control" id="nb_days" name="nb_days" placeholder="Nombre de jours" readonly value="{{ vmPro.subDates(vmPro.product.stay.start_date,vmPro.product.stay.end_date) }}">
+			</div>
+			<!--/Nb de Jour -->
+		</div>
+		<div class="col-md-3">
+			<!--Nb de Nuitée (-1 nbJour) -->
+			<div class="form-group has-feedback">
+				<label for="nb_nights">Nombre de Nuitée</label>
+				<input type="text" class="form-control" id="nb_nights" name="nb_nights" placeholder="Nombre de Nuitée" readonly value="{{ vmPro.getNights(vmPro.product.stay.start_date,vmPro.product.stay.end_date) }}">
+			</div>
+			<!--/Nb de Nuitée -->
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+
+	<div class="row" ng-if="vmPro.product.type!=='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.supplier)==='Intermédiaire'" ng-class="{'has-error': vmPro.productForm.company.$invalid && (vmPro.productForm.company.$dirty || vmPro.productForm.$submitted)}">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type!=='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<button type="button" class="btn btn-info" ng-click="vmPro.product.skipDetail=!vmPro.product.skipDetail">{{vmPro.product.skipDetail?'Afficher les détails':'Passer les détails'}}</button>
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.product.skipDetail">
+		<div class="col-md-12 bold">
+			<hr>Total<br><br></div>
+	</div>
+	<div ng-if="vmPro.product.skipDetail" include-with-scope="app/main/products/product/forms/final.html"></div>
+
+</form>

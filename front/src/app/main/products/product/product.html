@@ -1,0 +1,51 @@
+<div class="widgets">
+	<div class="row">
+		<div class="col-md-12">
+			<div ba-panel>
+				<ba-wizard submit="vmPro.save(true)" continue="vmPro.save(false)" cancel="vmPro.cancel()" skip-details="vmPro.product.skipDetail">
+					<ba-wizard-step title="Nouveau Produit" form="vmPro.productForm" show="true">
+						<div include-with-scope="app/main/products/product/forms/main.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Traitement de dossier de visa" form="vmPro.visaForm" show="vmPro.product.type==='Traitement de dossier de visa'">
+						<div include-with-scope="app/main/products/product/forms/visa.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Réservation d’hôtel" form="vmPro.hotelForm" show="vmPro.product.type==='Réservation d’hôtel' || (vmPro.showHotelForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/hotel.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Assurance de voyage" form="vmPro.travelInsurenceForm" show="vmPro.product.type==='Assurance de voyage' || (vmPro.showInsurenceForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/travel_insurence.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Transport routier" form="vmPro.roadTransportForm" show="vmPro.product.type==='Transport routier'">
+						<div include-with-scope="app/main/products/product/forms/road_transport.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Billet d’avion" form="vmPro.planeTicketForm" show="vmPro.product.type==='Billet d’avion' || (vmPro.showPlaneTicketForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/plane_ticket.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Location" form="vmPro.rantingForm" show="vmPro.product.type==='Location' || (vmPro.showRantingForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/ranting.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Transport maritime" form="vmPro.shipTicketForm" show="vmPro.product.type==='Transport maritime' || (vmPro.showShipTicketForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/ship_ticket.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Autre" form="vmPro.shipTicketForm" show="vmPro.product.type==='Autre' || (vmPro.showOtherForm && vmPro.product.type==='Traitement de dossier de visa')">
+						<div include-with-scope="app/main/products/product/forms/other.html"></div>
+					</ba-wizard-step>
+
+					<ba-wizard-step title="Total" show="vmPro.product.type" is-update="vmPro.product_id">
+						<form name="vmPro.personalInfo" novalidate>
+							<div include-with-scope="app/main/products/product/forms/final.html"></div>
+						</form>
+					</ba-wizard-step>
+				</ba-wizard>
+			</div>
+		</div>
+	</div>
+</div>

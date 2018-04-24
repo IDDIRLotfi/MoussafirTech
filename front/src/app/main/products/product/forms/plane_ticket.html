@@ -1,0 +1,363 @@
+<form name="planeTicketForm" novalidate>
+	<div class="row" ng-if="vmPro.product.type==='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.plane_ticket.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.plane_ticket.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.plane_ticket.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+		<div class="col-md-12" ng-if="!vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'">
+			<hr>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Type billet-->
+			<div class="form-group">
+				<label for="ticket_type">Type billet<span class="required-input">*</span></label>
+				<select id="ticket_type" class="form-control" title="Type billet" selectpicker ng-model="vmPro.product.plane_ticket.ticket_type">
+					<option>Simple</option>
+					<option>Aller-Retour</option>
+				</select>
+			</div>
+			<!--/Type billet-->
+		</div>
+	</div>
+
+
+	<div class="row" ng-if="vmPro.product.plane_ticket.ticket_type">
+		<div class="col-md-12 bold" ng-if="vmPro.product.plane_ticket.ticket_type==='Aller-Retour'">Aller <br><br></div>
+		<div class="col-md-2">
+			<!--Date Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_date_from.$invalid && (vmPro.planeTicketForm.departure_date_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_date_from">Date Départ<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="departure_date_from" name="departure_date_from" placeholder="Date Départ" ng-model="vmPro.product.plane_ticket.departure_date_from"
+				    required>
+			</div>
+			<!--/Date Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_time_from.$invalid && (vmPro.planeTicketForm.departure_time_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_time_from">Heure Départ<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="departure_time_from" name="departure_time_from" placeholder="Heure Départ" ng-model="vmPro.product.plane_ticket.departure_time_from"
+				    required>
+			</div>
+			<!--/Heure Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Aeroport Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_airport_from.$invalid && (vmPro.planeTicketForm.departure_airport_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_airport_from">Aeroport Départ<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="departure_airport_from" name="departure_airport_from" placeholder="Aeroport Départ"
+				    ng-model="vmPro.product.plane_ticket.departure_airport_from" required>
+			</div>
+			<!--/Aeroport Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Date Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_date_from.$invalid && (vmPro.planeTicketForm.arrival_date_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_date_from">Date Arrivée<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="arrival_date_from" name="arrival_date_from" placeholder="Date Arrivée" ng-model="vmPro.product.plane_ticket.arrival_date_from"
+				    required>
+			</div>
+			<!--/Date Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_time_from.$invalid && (vmPro.planeTicketForm.arrival_time_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_time_from">Heure Arrivée<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="arrival_time_from" name="arrival_time_from" placeholder="Heure Arrivée" ng-model="vmPro.product.plane_ticket.arrival_time_from"
+				    required>
+			</div>
+			<!--/Heure Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Aeroport Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_airport_from.$invalid && (vmPro.planeTicketForm.arrival_airport_from.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_airport_from">Aeroport Arrivée<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="arrival_airport_from" name="arrival_airport_from" placeholder="Aeroport Arrivée"
+				    ng-model="vmPro.product.plane_ticket.arrival_airport_from" required>
+			</div>
+			<!--/Aeroport Arrivée-->
+		</div>
+	</div>
+
+	<div class="row" ng-if="vmPro.product.plane_ticket.ticket_type==='Aller-Retour'">
+		<div class="col-md-12 bold">Retour <br><br></div>
+		<div class="col-md-2">
+			<!--Date Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_date_to.$invalid && (vmPro.planeTicketForm.departure_date_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_date_to">Date Départ<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="departure_date_to" name="departure_date_to" placeholder="Date Départ" ng-model="vmPro.product.plane_ticket.departure_date_to"
+				    required>
+			</div>
+			<!--/Date Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_time_to.$invalid && (vmPro.planeTicketForm.departure_time_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_time_to">Heure Départ<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="departure_time_to" name="departure_time_to" placeholder="Heure Départ" ng-model="vmPro.product.plane_ticket.departure_time_to"
+				    required>
+			</div>
+			<!--/Heure Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Aeroport Départ-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.departure_airport_to.$invalid && (vmPro.planeTicketForm.departure_airport_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="departure_airport_to">Aeroport Départ<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="departure_airport_to" name="departure_airport_to" placeholder="Aeroport Départ"
+				    ng-model="vmPro.product.plane_ticket.departure_airport_to" required>
+			</div>
+			<!--/Aeroport Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Date Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_date_to.$invalid && (vmPro.planeTicketForm.arrival_date_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_date_to">Date Arrivée<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="arrival_date_to" name="arrival_date_to" placeholder="Date Arrivée" ng-model="vmPro.product.plane_ticket.arrival_date_to"
+				    required>
+			</div>
+			<!--/Date Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Heure Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_time_to.$invalid && (vmPro.planeTicketForm.arrival_time_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_time_to">Heure Arrivée<span class="required-input">*</span></label>
+				<input type="time" class="form-control" id="arrival_time_to" name="arrival_time_to" placeholder="Heure Arrivée" ng-model="vmPro.product.plane_ticket.arrival_time_to"
+				    required>
+			</div>
+			<!--/Heure Arrivée-->
+		</div>
+		<div class="col-md-2">
+			<!--Aeroport Arrivée-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.arrival_airport_to.$invalid && (vmPro.planeTicketForm.arrival_airport_to.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="arrival_airport_to">Aeroport Arrivée<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="arrival_airport_to" name="arrival_airport_to" placeholder="Aeroport Arrivée"
+				    ng-model="vmPro.product.plane_ticket.arrival_airport_to" required>
+			</div>
+			<!--/Aeroport Arrivée-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<hr>
+		</div>
+		<div class="col-md-12"></div>
+		<div class="col-md-2">
+			<!--Marque d'avion-->
+			<div class="form-group" ng-class="{'has-error': vmPro.planeTicketForm.plane_type.$invalid && (vmPro.planeTicketForm.plane_type.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="plane_type">Marque d'avion<span class="required-input">*</span></label>
+				<select id="plane_type" class="form-control" title="Marque d'avion" selectpicker ng-model="vmPro.product.plane_ticket.plane_type">
+				<option>Boing</option>
+				<option>Airbus</option>
+				<option>ATR</option>
+				<option>Autre</option>
+			</select>
+				<span class="help-block error-block basic-block">La marque est obligatoire</span>
+			</div>
+			<!--/Marque d'avion-->
+		</div>
+		<div class="col-md-2">
+			<!--Nombre de place-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.nb_places.$invalid && (vmPro.planeTicketForm.nb_places.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="nb_places">Nombre de place<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de place" ng-model="vmPro.product.plane_ticket.nb_places"
+				    required>
+				<span class="help-block error-block basic-block">Le Nombre de place est obligatoire</span>
+			</div>
+			<!--/Nombre de place-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.unit_price.$invalid && (vmPro.planeTicketForm.unit_price.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="unit_price">Prix Unitaire<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="unit_price" name="unit_price" placeholder="Prix Unitaire" ng-model="vmPro.product.plane_ticket.r_unit_price">
+				<span class="help-block error-block basic-block">Le Prix Unitaire est obligatoire</span>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Transport-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.transport_price.$invalid && (vmPro.planeTicketForm.transport_price.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="transport_price">Prix Transport<span class="required-input">*</span></label>
+				<input type="text" min="1" class="form-control" id="transport_price" name="transport_price" placeholder="Prix Transport"
+				    readonly ng-value="(vmPro.product.plane_ticket.r_unit_price*vmPro.product.plane_ticket.nb_places) || 0" required>
+				<span class="help-block error-block basic-block">Le Prix Transport est obligatoire</span>
+			</div>
+			<!--/Prix Transport-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix moyen de transport -->
+			<div class="form-group has-feedback">
+				<label for="avg_price_price">Prix moyen<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="avg_price_price" name="avg_price_price" placeholder="Prix moyen" readonly ng-value="((vmPro.product.plane_ticket.r_unit_price*vmPro.product.plane_ticket.nb_places)/vmPro.product.occupants.length) || 0">
+			</div>
+			<!--/Prix moyen de transport-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="avg_price_price">Prix Achat Unitaire<span class="required-input">*</span></label>
+				<input type="number" class="form-control" id="avg_price_price" name="avg_price_price" placeholder="Prix Achat Unitaire" ng-change="vmPro.update('plane_ticket','unit_price')"
+				    ng-model="vmPro.product.plane_ticket.unit_price">
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.profit.$invalid && (vmPro.planeTicketForm.profit.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="profit">Bénéfice %</label>
+				<input type="number" ng-change="vmPro.update('plane_ticket','profit')" min="1" max="100" class="form-control" id="profit"
+				    name="profit" placeholder="Pourcentage" ng-model="vmPro.product.plane_ticket.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="selling_price" name="selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.plane_ticket.unit_price+vmPro.product.plane_ticket.unit_price*(vmPro.product.plane_ticket.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--S'applique à tous-->
+			<div class="form-group has-feedback pt25">
+				<input type="checkbox" ng-change="vmPro.updateAll('plane_ticket')" id="apply_to_all" name="apply_to_all" ng-model="vmPro.product.plane_ticket.all">
+				<label for="apply_to_all">S'applique à tous</label>
+			</div>
+			<!--/S'applique à tous-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Nombre d'escale-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm.nb_stops.$invalid && (vmPro.planeTicketForm.nb_stops.$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="nb_stops">Nombre d'escale<span class="required-input">*</span></label>
+				<input type="number" min="0" max="3" class="form-control" id="nb_stops" name="nb_stops" placeholder="Nombre d'escale" ng-model="vmPro.product.plane_ticket.nb_stops"
+				    required>
+			</div>
+			<!--/Nombre d'escale-->
+		</div>
+		<div class="col-md-3" ng-repeat="stop in vmPro.range(vmPro.product.plane_ticket.nb_stops) track by $index">
+			<!--Aeroport d'escale-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['stop_'+{{$index}}].$invalid && (vmPro.planeTicketForm['stop_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="stop_{{$index}}">Aeroport d'escale N°{{$index+1}}</label>
+				<input type="text" class="form-control" id="stop_{{$index}}" name="stop_{{$index}}" placeholder="Escale" ng-model="vmPro.product.plane_ticket.stops[$index]">
+			</div>
+			<!--/Aeroport d'escale-->
+		</div>
+	</div>
+
+
+	<div class="row" ng-repeat="occupant in vmPro.product.occupants track by $index">
+		<div class="col-md-12" ng-init="vmPro.product.plane_ticket.occupants[occupant]= vmPro.product.plane_ticket.occupants[occupant] || {}"><br>{{ ($index+1)+"- "+ vmPro.occupant(occupant).username }}<br><br></div>
+		<div class="col-md-2">
+			<!--Age-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['age_'+{{$index}}].$invalid && (vmPro.planeTicketForm['age_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="age_{{$index}}">Age</label>
+				<input type="number" min="0" max="150" class="form-control" id="age_{{$index}}" name="age_{{$index}}" placeholder="Age" ng-model="vmPro.product.plane_ticket.occupants[occupant].age">
+			</div>
+			<!--/Age-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Achat Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['unit_price_'+{{$index}}].$invalid && (vmPro.planeTicketForm['unit_price_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="unit_price_{{$index}}">Prix Achat Unitaire</label>
+				<input type="number" class="form-control" id="unit_price_{{$index}}" name="unit_price_{{$index}}" placeholder="Prix Achat"
+				    ng-readonly="vmPro.product.plane_ticket.all" ng-model="vmPro.product.plane_ticket.occupants[occupant].unit_price">
+			</div>
+			<!--/Prix Achat Unitaire-->
+		</div>
+		<div class="col-md-2">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['profit_'+{{$index}}].$invalid && (vmPro.planeTicketForm['profit_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="profit_{{$index}}">Bénéfice</label>
+				<input type="number" min="0" max="100" class="form-control" id="profit_{{$index}}" name="profit_{{$index}}" ng-readonly="vmPro.product.plane_ticket.all"
+				    placeholder="%" ng-model="vmPro.product.plane_ticket.occupants[occupant].profit">
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['selling_price_'+{{$index}}].$invalid && (vmPro.planeTicketForm['selling_price_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="selling_price_{{$index}}">Prix Vente Unitaire</label>
+				<input type="number" class="form-control" id="selling_price_{{$index}}" name="selling_price_{{$index}}" placeholder="Prix Vente"
+				    readonly ng-value="vmPro.product.plane_ticket.occupants[occupant].unit_price+vmPro.product.plane_ticket.occupants[occupant].unit_price*(vmPro.product.plane_ticket.occupants[occupant].profit/100)">
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-2">
+			<!--Supplément-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['supplement_amount_'+{{$index}}].$invalid && (vmPro.planeTicketForm['supplement_amount_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="supplement_amount_{{$index}}">Montant Supplément</label>
+				<input type="number" min="0" class="form-control" id="supplement_amount_{{$index}}" name="supplement_amount_{{$index}}" placeholder="Montant"
+				    ng-model="vmPro.product.plane_ticket.occupants[occupant].supplement_amount">
+			</div>
+			<!--/Supplément-->
+		</div>
+		<div class="col-md-1">
+			<!--Majoré (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['supplement_percentage_'+{{$index}}].$invalid && (vmPro.planeTicketForm['supplement_percentage_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="supplement_percentage_{{$index}}">Majoré</label>
+				<input type="number" min="0" max="100" class="form-control" id="supplement_percentage_{{$index}}" name="supplement_percentage_{{$index}}"
+				    placeholder="%" ng-model="vmPro.product.plane_ticket.occupants[occupant].supplement_percentage">
+			</div>
+			<!--/Majoré (pourcentage)-->
+		</div>
+		<div class="col-md-1">
+			<!--Réduction (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.planeTicketForm['discount_'+{{$index}}].$invalid && (vmPro.planeTicketForm['discount_'+{{$index}}].$dirty || vmPro.planeTicketForm.$submitted)}">
+				<label for="discount_{{$index}}">Réduction</label>
+				<input type="number" min="0" max="100" class="form-control" id="discount_{{$index}}" name="discount_{{$index}}" placeholder="%"
+				    ng-model="vmPro.product.plane_ticket.occupants[occupant].discount">
+			</div>
+			<!--/Réduction (pourcentage)-->
+		</div>
+		<div class="col-md-10"></div>
+		<div class="col-md-2">
+			<!--Total Occupant-->
+			<div class="form-group">
+				<label for="total_{{$index}}">Total par Occupant</label>
+				<input type="number" class="form-control" id="total_{{$index}}" name="total_{{$index}}" placeholder="Total Occupant" readonly
+				    ng-value="vmPro.planePriceByOccupant(occupant)">
+			</div>
+			<!--/Total Occupant-->
+		</div>
+	</div>
+</form>

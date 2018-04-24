@@ -1,0 +1,15 @@
+<div class="modal-header">
+	<h4 class="modal-title">Produits fournis par: {{dialogVm.supplier.username}}</h4>
+</div>
+<div class="modal-body">
+	<div ng-repeat="product in dialogVm.products | orderBy:'date' track by $index" style="font-size:18px">
+		<span>{{$index+1}}- {{product.name}}</span>
+		<button type="button" class="btn btn-info m5 float-right margin-left" style="margin-top: -8px;" ng-click="dialogVm.showProduct(product._id)">Details
+		</button>
+		<span class="float-right"> le: {{product.date.slice(0,10)}}</span>
+		<br><br><br>
+	</div> 
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" ng-click="dialogVm.cancel()">Fermer</button>
+</div>

@@ -1,0 +1,105 @@
+<div class="row">
+	<div class="col-md-4">
+		<!--Prix d'Achat-->
+		<div class="form-group has-feedback" ng-if="!vmPro.product.skipDetail">
+			<label for="purchase_price">Prix d'Achat</label>
+			<input type="number" class="form-control" id="purchase_price" name="purchase_price" placeholder="Prix d'Achat" readonly ng-value="vmPro.totalPrice()">
+		</div>
+		<div class="form-group has-feedback" ng-if="vmPro.product.skipDetail">
+			<label for="purchase_price">Prix d'Achat</label>
+			<input type="number" class="form-control" id="purchase_price" name="purchase_price" placeholder="Prix d'Achat" ng-model="vmPro.product.purchase_price_default"
+			    ng-change="vmPro.totalPrice()">
+		</div>
+		<!--/Prix d'Achat-->
+	</div>
+	<div class="col-md-4">
+		<!--Bénéfice-->
+		<div class="form-group has-feedback">
+			<label for="total_profit">Bénéfice %</label>
+			<input type="number" min="0" max="100" class="form-control" id="total_profit" name="total_profit" placeholder="Pourcentage"
+			    ng-model="vmPro.product.total_profit" ng-change="vmPro.totalPrice()">
+		</div>
+		<!--/Bénéfice-->
+	</div>
+	<div class="col-md-4">
+		<!--Prix de vente-->
+		<div class="form-group has-feedback">
+			<label for="total_selling">Prix de vente</label>
+			<input type="number" class="form-control" id="total_selling" name="total_selling" placeholder="Prix de vente" readonly ng-value="vmPro.product.total_default">
+		</div>
+		<!--/Prix de vente-->
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<!--Taux d'échange-->
+		<div class="form-group has-feedback">
+			<label for="exchange_rate">Taux d'échange</label>
+			<input type="number" class="form-control" id="exchange_rate" name="exchange_rate" placeholder="Taux d'échange" ng-model="vmPro.product.exchange_rate" ng-init="vmPro.product.exchange_rate = vmPro.product.exchange_rate || 1">
+		</div>
+		<!--/Taux d'échange-->
+	</div>
+</div>
+<br>
+<!-- price in DZD -->
+<div class="row">
+	<div class="col-md-4">
+		<!--Prix d'Achat-->
+		<div class="form-group has-feedback" ng-if="!vmPro.product.skipDetail">
+			<label for="purchase_price">Prix d'Achat (DZD)</label>
+			<input type="number" class="form-control" id="purchase_price" name="purchase_price" placeholder="Prix d'Achat" readonly ng-value="vmPro.product.purchase_price">
+		</div>
+		<!--/Prix d'Achat-->
+	</div>
+	<div class="col-md-4">
+		<!--Bénéfice-->
+		<div class="form-group has-feedback">
+			<label for="total_profit">Bénéfice %</label>
+			<input type="number" min="0" max="100" class="form-control" id="total_profit" name="total_profit" placeholder="Pourcentage"
+			    readonly ng-value="vmPro.product.total_profit">
+		</div>
+		<!--/Bénéfice-->
+	</div>
+	<div class="col-md-4">
+		<!--Prix de vente-->
+		<div class="form-group has-feedback">
+			<label for="total_selling">Prix de vente (DZD)</label>
+			<input type="number" class="form-control" id="total_selling" name="total_selling" placeholder="Prix de vente" readonly ng-value="vmPro.product.total">
+		</div>
+		<!--/Prix de vente-->
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12"><br></div>
+	<div class="col-md-3"></div>
+	<div class="col-md-2">
+		<!--Prix d'Achat-->
+		<div class="form-group has-feedback">
+			<label for="recieved">Reçu</label>
+			<input type="number" class="form-control" id="recieved" name="recieved" placeholder="Reçu" ng-model="vmPro.product.paid_amount">
+		</div>
+		<!--/Prix d'Achat-->
+	</div>
+	<div class="col-md-2">
+		<!--Bénéfice-->
+		<div class="form-group has-feedback">
+			<label for="total">Total</label>
+			<input type="number" class="form-control" id="total" name="total" placeholder="Total" ng-model="vmPro.product.total"
+			    ng-readonly="!vmPro.product.skipDetail">
+		</div>
+		<!--/Bénéfice-->
+	</div>
+	<div class="col-md-2">
+		<!--Prix de vente-->
+		<div class="form-group has-feedback">
+			<label for="remaining">Reste</label>
+			<input type="number" class="form-control" id="remaining" name="remaining" placeholder="Reste" ng-value="vmPro.product.total-vmPro.product.paid_amount"
+			    readonly>
+		</div>
+		<!--/Prix de vente-->
+	</div>
+	<div class="col-md-3"></div>
+
+</div>

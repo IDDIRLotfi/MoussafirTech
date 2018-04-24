@@ -1,0 +1,43 @@
+<hr>	
+<form name="vmPro.newClient" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{'has-error': vmPro.newClient.type.$invalid && (vmPro.newClient.type.$dirty || vmPro.newClient.$submitted)}"
+			    ng-required="false">
+				<label for="user_type">Type Client<span class="required-input">*</span></label>
+				<select id="user_type" class="form-control" title="Type" selectpicker ng-model="vmPro.new_client.type">
+					<option selected>Particulier</option>
+					<option>Agence de voyage</option>
+					<option>Entreprise</option>
+					<option>Autre</option>
+				</select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+			<button ng-if="false" type="button" class="btn btn-primary" ng-click="vmPro.showPart=!vmPro.showPart;vmPro.nbPart=0">Ajouter Partenaire</button>
+			<div ng-if="vmPro.showPart" class="form-group has-feedback" ng-class="{'has-error': vmPro.newClient.nbPart.$invalid && (vmPro.newClient.nbPart.$dirty || vmPro.newClient.$submitted)}">
+				<br>
+				<label for="nbPart">Nombre de Partenaire</label>
+				<input type="number" min="0" class="form-control" id="nbPart" name="nbPart" placeholder="Nombre de Partenaire" ng-model="vmPro.nbPart">
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.newClient.username.$invalid && (vmPro.newClient.username.$dirty || vmPro.newClient.$submitted)}">
+				<label for="username">Nom Complet<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="username" name="username" placeholder="Nom complet" ng-model="vmPro.new_client.username"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<button type="button" class="btn btn-primary float-right margin-left" ng-click="vmPro.saveClient()">Ajouter</button>
+			<button type="button" class="btn btn-danger float-right" ng-click="vmPro.addClient=false">Annuler</button>
+		</div>
+	</div> 
+</form>
+<hr>

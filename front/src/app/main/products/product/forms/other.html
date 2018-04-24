@@ -1,0 +1,111 @@
+<form name="otherForm" novalidate>
+	<div class="row" ng-if="vmPro.product.type==='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.other.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.other.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.other.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+		<div class="col-md-12" ng-if="!vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'">
+			<hr>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-2">
+			<!--Nom-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.otherForm.name.$invalid && (vmPro.otherForm.name.$dirty || vmPro.otherForm.$submitted)}">
+				<label for="name">Nom<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Nom" ng-model="vmPro.product.other.name" required>
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+			<!--/Nom-->
+		</div>
+		<div class="col-md-2">
+			<!--Titre-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.otherForm.title.$invalid && (vmPro.otherForm.title.$dirty || vmPro.otherForm.$submitted)}">
+				<label for="title">Titre<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="title" name="title" placeholder="Titre" ng-model="vmPro.product.other.title"
+				    required>
+				<span class="help-block error-block basic-block">Le titre est obligatoire</span>
+			</div>
+			<!--/Titre-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix d'Achat-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.otherForm.unit_price.$invalid && (vmPro.otherForm.unit_price.$dirty || vmPro.otherForm.$submitted)}">
+				<label for="unit_price">Prix d'Achat<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="unit_price" name="unit_price" placeholder="Prix d'Achat" ng-model="vmPro.product.other.unit_price"
+				    required>
+				<span class="help-block error-block basic-block">Le Prix d'Achat est obligatoire</span>
+			</div>
+			<!--/Prix d'Achat-->
+		</div>
+		<div class="col-md-2">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.otherForm.profit.$invalid && (vmPro.otherForm.profit.$dirty || vmPro.otherForm.$submitted)}">
+				<label for="profit">Bénéfice %<span class="required-input">*</span></label>
+				<input type="number" min="0" max="100" class="form-control" id="profit" name="profit" placeholder="Pourcentage" ng-model="vmPro.product.other.profit"
+				    required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente -->
+			<div class="form-group has-feedback">
+				<label for="selling_price">Prix Vente </label>
+				<input type="number" min="1" class="form-control" id="selling_price" name="selling_price" placeholder="Prix Vente " ng-value="vmPro.product.other.unit_price * (1 + (vmPro.product.other.profit/100))"
+				    readonly>
+			</div>
+			<!--/Prix Vente-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<hr>
+		</div>
+		<div class="col-md-12"></div>
+		<div class="col-md-2">
+			<!--Quantité -->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.otherForm.quantity.$invalid && (vmPro.otherForm.quantity.$dirty || vmPro.otherForm.$submitted)}">
+				<label for="quantity">Quantité</label>
+				<input type="number" min="1" class="form-control" id="quantity" name="quantity" placeholder="Quantité" ng-model="vmPro.product.other.quantity">
+			</div>
+			<!--/Quantité-->
+		</div>
+		<div class="col-md-2">
+			<!--Total -->
+			<div class="form-group has-feedback">
+				<label for="total_price">Total</label>
+				<input type="number" class="form-control" id="total_price" name="total_price" placeholder="Total" ng-value="(vmPro.product.other.unit_price * (1 + (vmPro.product.other.profit / 100)) * vmPro.product.other.quantity) || 0"
+				    readonly>
+			</div>
+			<!--/Total-->
+		</div>
+	</div>
+</form>

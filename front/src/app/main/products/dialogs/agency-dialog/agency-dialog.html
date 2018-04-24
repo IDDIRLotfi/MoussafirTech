@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<h4 class="modal-title">Information sur l'agence pour l'impression</h4>
+	<hr>
+</div>
+<div class="modal-body" style="padding: 0px 15px;">
+	<form name="dialogVm.agencyForm" novalidate>
+		<div class="row">
+			<div class="col-md-8">
+				<span for="file" style="color:#000">Logo d'agence<br></span>
+				<input class="mt5" type="file" ngf-select ng-model="dialogVm.agency_logo" name="file" accept="image/*" required ngf-model-invalid="errorFile">
+			</div>
+			<div class="col-md-4">
+				<img style="margin-top: -15px;" ng-show="dialogVm.agencyForm.file.$valid" width="60" ngf-thumbnail="dialogVm.agency_logo"
+				    class="thumb float-right">
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<hr>
+	<button type="button" class="btn btn-info" ng-click="dialogVm.print()"><i class="fa fa-print"></i> Imprimer</button>
+	<button type="button" class="btn btn-default" ng-click="dialogVm.cancel()">Fermer</button>
+</div>

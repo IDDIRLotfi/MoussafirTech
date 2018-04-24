@@ -1,0 +1,86 @@
+<form name="vmCl.newClient" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group" ng-class="{'has-error': vmCl.newClient.type.$invalid && (vmCl.newClient.type.$dirty || vmCl.newClient.$submitted)}"
+			    ng-required="false">
+				<label for="user_type">Type Client<span class="required-input">*</span></label>
+				<select id="user_type" class="form-control" title="Type" selectpicker ng-model="vmCl.user.type">
+                                            <option selected>Particulier</option>
+                                            <option>Agence de voyage</option>
+                                            <option>Entreprise</option>
+                                            <option>Autre</option>
+                                        </select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group has-feedback" ng-class="{'has-error': vmCl.newClient.username.$invalid && (vmCl.newClient.username.$dirty || vmCl.newClient.$submitted)}">
+				<label for="username">Nom Complet<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="username" name="username" placeholder="Nom complet" ng-model="vmCl.user.username"
+				    ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<!--Numéro Téléphone-->
+			<div ng-repeat="phone in vmCl.user.phone_numbers track by $index" class="form-group has-feedback" ng-class="{'has-error': vmCl.personalInfo['phone_number_'+{{$index}}].$invalid && (vmCl.personalInfo['phone_number_'+{{$index}}].$dirty || vmCl.personalInfo.$submitted)}">
+				<label for="phone_number_{{$index}}" class="full">Numéro Téléphone {{ $index+1 }}<span class="required-input" ng-if="$first">*</span>
+					<add-button is-last="$last" ng-model="vmCl.user.phone_numbers" max="3" index="$index"></add-button>				
+				</label>
+				<input ng-if="$first" type="text" class="form-control" id="phone_number_{{$index}}" name="phone_number_{{$index}}" placeholder="Numéro Téléphone"
+				    ng-model="vmCl.user.phone_numbers[$index]" ng-required="false">
+				<input ng-if="!$first" type="text" class="form-control" id="phone_number_{{$index}}" name="phone_number_{{$index}}" placeholder="Numéro Téléphone"
+				    ng-model="vmCl.user.phone_numbers[$index]">
+				<span class="help-block error-block basic-block">Le Numéro Téléphone est obligatoire</span>
+			</div>
+			<!--/Numéro Téléphone-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<button type="button" class="btn btn-primary" ng-click="vmCl.user.showPart=!vmCl.user.showPart;vmCl.user.nbPart=0">Ajouter Partenaire</button>
+			<div ng-if="vmCl.user.showPart" class="form-group has-feedback" ng-class="{'has-error': vmCl.newClient.nbPart.$invalid && (vmCl.newClient.nbPart.$dirty || vmCl.newClient.$submitted)}">
+				<br>
+				<label for="nbPart">Nombre de Partenaire</label>
+				<input type="number" min="0" class="form-control" id="nbPart" name="nbPart" placeholder="Nombre de Partenaire" ng-model="vmCl.user.nbPart">
+			</div>
+		</div>
+	</div>
+
+	<!--Partenaire -->
+	<div ng-if="vmCl.user.showPart" class="row" ng-repeat="number in vmCl.range(vmCl.user.nbPart) track by $index">
+		<div class="col-md-4">
+			<div class="form-group" ng-class="{'has-error': vmCl.newClient['type_'+_{{$index}}].$invalid && (vmCl.newClient['type_'+_{{$index}}].$dirty || vmCl.newClient.$submitted)}">
+				<label for="user_type_{{$index}}">Type Client<span class="required-input">*</span></label>
+				<select id="user_type_{{$index}}" class="form-control" title="Type" selectpicker ng-model="vmCl.user.partenaires[$index].type">
+					<option selected>Adulte (+12 ans)</option>
+					<option>Enfant (-12 ans)</option>
+					<option>Bébé (-2 ans)</option>
+					<option>Autre</option>
+				</select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div styleclass="form-group has-feedback" ng-class="{'has-error': vmCl.newClient['partner_name_'+{{$index}}].$invalid && (vmCl.newClient['partner_name_'+{{$index}}].$dirty || vmCl.newClient.$submitted)}">
+				<label for="partner_name_{{$index}}" style="font-weight: 400;">Nom Complet<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="partner_name_{{$index}}" name="partner_name_{{$index}}" placeholder="Nom complet"
+				    ng-model="vmCl.user.partenaires[$index].username" ng-required="false">
+				<span class="help-block error-block basic-block">Le nom est obligatoire</span>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div styleclass="form-group has-feedback" ng-class="{'has-error': vmCl.newClient['partner_date_'+{{$index}}].$invalid && (vmCl.newClient['partner_date_'+{{$index}}].$dirty || vmCl.newClient.$submitted)}">
+				<label for="partner_date_{{$index}}" style="font-weight: 400;">Date de naissance<span class="required-input">*</span></label>
+				<input type="date" class="form-control" id="partner_date_{{$index}}" name="partner_date_{{$index}}" placeholder="Date de Naissance"
+				    ng-model="vmCl.user.partenaires[$index].birthday" ng-required="false">
+				<span class="help-block error-block basic-block">La date de naissance est obligatoire</span>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,259 @@
+<form name="roadTransportForm" novalidate>
+	<div class="row" ng-if="vmPro.product.type==='Traitement de dossier de visa'">
+
+		<div class="col-md-12 bold">Fournisseur <br> <br></div>
+		<div class="col-md-6">
+			<!-- Fournisseur -->
+			<div class="form-group">
+				<label for="supplier">Fournisseur<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.road_transport.supplier" options="supplier.username for supplier in vmPro.suppliers"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Fournisseur">
+				</multiselect>
+			</div>
+			<!-- /Fournisseur -->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Compagnie -->
+			<div class="form-group" ng-if="vmPro.supplierType(vmPro.product.road_transport.supplier)==='Intermédiaire'">
+				<label for="company">Compagnie<span class="required-input">*</span></label>
+				<multiselect class="full-multiselect" ng-model="vmPro.product.road_transport.company" options="company.username for company in vmPro.companies"
+				    data-order-options-by="-model.date" data-multiple="false" data-compare-by="_id" scroll-after-rows="5" filter-after-rows="5"
+				    ms-header="Compagnie">
+				</multiselect>
+			</div>
+			<!-- /Compagnie -->
+		</div>
+		<div class="col-md-2 mt21">
+			<button type="button" class="btn btn-success float-right" ng-click="vmPro.addSupplier=!vmPro.addSupplier">{{vmPro.addSupplier?'Cacher':'Nouveau Fournisseur'}}</button>
+		</div>
+		<div class="col-md-12" ng-if="!vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'">
+			<hr>
+		</div>
+	</div>
+
+	<div ng-if="vmPro.addSupplier && vmPro.product.type==='Traitement de dossier de visa'" include-with-scope="app/main/products/product/forms/new_supplier.html"></div>
+
+	<div class="row">
+		<div class="col-md-2">
+			<!--Type Transport-->
+			<div class="form-group" ng-class="{'has-error': vmPro.roadTransportForm.transport_type.$invalid && (vmPro.roadTransportForm.transport_type.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="transport_type">Type Transport<span class="required-input">*</span></label>
+				<select id="transport_type" class="form-control" title="Type Transport" selectpicker ng-model="vmPro.product.road_transport.type">
+				<option>Bus</option>
+				<option>Véhicule</option>
+				<option>Autre</option>
+			</select>
+				<span class="help-block error-block basic-block">Le type est obligatoire</span>
+			</div>
+			<!--/Type Transport-->
+		</div>
+		<div class="col-md-2">
+			<!--Nombre de place-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm.nb_places.$invalid && (vmPro.roadTransportForm.nb_places.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="nb_places">Nombre de place<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="nb_places" name="nb_places" placeholder="Nombre de place" ng-model="vmPro.product.road_transport.nb_places"
+				    required>
+				<span class="help-block error-block basic-block">Le Nombre de place est obligatoire</span>
+			</div>
+			<!--/Nombre de place-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm.unit_price.$invalid && (vmPro.roadTransportForm.unit_price.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="unit_price">Prix Unitaire<span class="required-input">*</span></label>
+				<input type="number" min="1" class="form-control" id="unit_price" name="unit_price" placeholder="Prix Unitaire" ng-model="vmPro.product.road_transport.r_unit_price">
+				<span class="help-block error-block basic-block">Le Prix Unitaire est obligatoire</span>
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Transport-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm.transport_price.$invalid && (vmPro.roadTransportForm.transport_price.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="transport_price">Prix Transport<span class="required-input">*</span></label>
+				<input type="text" min="1" class="form-control" id="transport_price" name="transport_price" placeholder="Prix Transport"
+				    readonly ng-value="(vmPro.product.road_transport.r_unit_price*vmPro.product.road_transport.nb_places) || 0" required>
+				<span class="help-block error-block basic-block">Le Prix Transport est obligatoire</span>
+			</div>
+			<!--/Prix Transport-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix moyen de transport -->
+			<div class="form-group has-feedback">
+				<label for="avg_price_price">Prix moyen<span class="required-input">*</span></label>
+				<input type="text" class="form-control" id="avg_price_price" name="avg_price_price" placeholder="Prix moyen" readonly ng-value="(vmPro.product.road_transport.r_unit_price*vmPro.product.road_transport.nb_places/vmPro.product.occupants.length) || 0">
+			</div>
+			<!--/Prix moyen de transport-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<!--Prix Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="avg_price_price">Prix Achat Unitaire<span class="required-input">*</span></label>
+				<input type="number" class="form-control" id="avg_price_price" name="avg_price_price" placeholder="Prix Achat Unitaire" ng-model="vmPro.product.road_transport.unit_price"
+				    ng-change="vmPro.update('road_transport','unit_price')">
+			</div>
+			<!--/Prix Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm.profit.$invalid && (vmPro.roadTransportForm.profit.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="profit">Bénéfice %</label>
+				<input type="number" ng-change="vmPro.update('road_transport','profit')" min="1" max="100" class="form-control" id="profit"
+				    name="profit" placeholder="Pourcentage" ng-model="vmPro.product.road_transport.profit" required>
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-3">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback">
+				<label for="selling_price">Prix Vente Unitaire</label>
+				<input type="number" min="1" class="form-control" id="selling_price" name="selling_price" placeholder="Prix Vente Unitaire"
+				    ng-value="vmPro.product.road_transport.unit_price+vmPro.product.road_transport.unit_price*(vmPro.product.road_transport.profit/100)"
+				    readonly>
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-3">
+			<!--S'applique à tous-->
+			<div class="form-group has-feedback pt25">
+				<input type="checkbox" ng-change="vmPro.updateAll('road_transport')" id="apply_to_all" name="apply_to_all" ng-model="vmPro.product.road_transport.all">
+				<label for="apply_to_all">S'applique à tous</label>
+			</div>
+			<!--/S'applique à tous-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="departure">Lieu de départ<span class="required-input">*</span></label>
+				<input name="departure" class="form-control" places-auto-complete size=80 types="['geocode']" ng-model="vmPro.product.road_transport.departure_address"
+				/>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="arrival">Lieu d'arrivée<span class="required-input">*</span></label>
+				<input name="arrival" class="form-control" places-auto-complete size=80 types="['geocode']" ng-model="vmPro.product.road_transport.arrival_address"
+				/>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<!--Nombre d'escale-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm.nb_stops.$invalid && (vmPro.roadTransportForm.nb_stops.$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="nb_stops">Nombre d'escale<span class="required-input">*</span></label>
+				<input type="number" min="0" max="5" class="form-control" id="nb_stops" name="nb_stops" placeholder="Nombre d'escale" ng-model="vmPro.product.road_transport.nb_stops"
+				    required>
+				<span class="help-block error-block basic-block">Le Nombre d'escale est obligatoire</span>
+			</div>
+			<!--/Nombre d'escale-->
+		</div>
+
+		<div ng-repeat="stop in vmPro.range(vmPro.product.road_transport.nb_stops) track by $index">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="stop_address_{{$index}}">Escal N°{{$index+1}}</label>
+					<input name="stop_address_{{$index}}" class="form-control" places-auto-complete size=80 types="['geocode']" ng-model="vmPro.product.road_transport.stops[$index]"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row" ng-repeat="occupant in vmPro.product.occupants track by $index">
+		<div class="col-md-12" ng-init="vmPro.product.road_transport.occupants[occupant]= vmPro.product.road_transport.occupants[occupant] || {}"><br>{{ ($index+1)+"- "+ vmPro.occupant(occupant).username }}<br><br></div>
+		<div class="col-md-1">
+			<!--Age-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['seat_number_'+{{$index}}].$invalid && (vmPro.roadTransportForm['seat_number_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="seat_number_{{$index}}">N° siège</label>
+				<select class="form-control" id="seat_number_{{$index}}" name="seat_number_{{$index}}" placeholder="Siège" ng-model="product.road_transport.occupants[occupant].seat_number">
+					<option ng-repeat="option in range(product.road_transport.nb_places) track by $index" value="{{$index+1}}">
+					{{$index+1}}</option>
+				</select>
+			</div>
+			<!--/Age-->
+		</div>
+		<div class="col-md-2">
+			<!--Lieu Départ-->
+			<div class="form-group" ng-class="{'has-error': vmPro.roadTransportForm['departure_place_'+{{$index}}].$invalid && (vmPro.roadTransportForm['departure_place_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="departure_place_{{$index}}">Départ<span class="required-input">*</span></label>
+				<select id="departure_place_{{$index}}" class="form-control" title="Départ" ng-model="vmPro.product.road_transport.occupants[occupant].departure_place">
+					<option ng-if="vmPro.product.road_transport.departure_address">{{ vmPro.product.road_transport.departure_address}}</option>
+					<option ng-repeat="stop in vmPro.product.road_transport.stops track by $index">{{ stop }}</option>
+				</select>
+				<span class="help-block error-block basic-block">Le Départ est obligatoire</span>
+			</div>
+			<!--/Lieu Départ-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Achat Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['unit_price_'+{{$index}}].$invalid && (vmPro.roadTransportForm['unit_price_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="unit_price_{{$index}}">Prix Achat Unitaire</label>
+				<input type="number" class="form-control" id="unit_price_{{$index}}" name="unit_price_{{$index}}" placeholder="Prix Achat"
+				    ng-readonly="vmPro.product.road_transport.all" ng-model="vmPro.product.road_transport.occupants[occupant].unit_price">
+			</div>
+			<!--/Prix Achat Unitaire-->
+		</div>
+		<div class="col-md-1">
+			<!--Bénéfice-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['profit_'+{{$index}}].$invalid && (vmPro.roadTransportForm['profit_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="profit_{{$index}}">Bénéfice</label>
+				<input type="number" min="0" max="100" class="form-control" id="profit_{{$index}}" name="profit_{{$index}}" ng-readonly="vmPro.product.road_transport.all"
+				    placeholder="%" ng-model="vmPro.product.road_transport.occupants[occupant].profit">
+			</div>
+			<!--/Bénéfice-->
+		</div>
+		<div class="col-md-2">
+			<!--Prix Vente Unitaire-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['selling_price_'+{{$index}}].$invalid && (vmPro.roadTransportForm['selling_price_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="selling_price_{{$index}}">Prix Vente Unitaire</label>
+				<input type="number" class="form-control" id="selling_price_{{$index}}" name="selling_price_{{$index}}" placeholder="Prix Vente"
+				    readonly ng-value="vmPro.product.road_transport.occupants[occupant].unit_price+vmPro.product.road_transport.occupants[occupant].unit_price*(vmPro.product.road_transport.occupants[occupant].profit/100)">
+			</div>
+			<!--/Prix Vente Unitaire-->
+		</div>
+		<div class="col-md-2">
+			<!--Supplément-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['supplement_amount_'+{{$index}}].$invalid && (vmPro.roadTransportForm['supplement_amount_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="supplement_amount_{{$index}}">Montant Supplément</label>
+				<input type="number" min="0" class="form-control" id="supplement_amount_{{$index}}" name="supplement_amount_{{$index}}" placeholder="Montant"
+				    ng-model="vmPro.product.road_transport.occupants[occupant].supplement_amount">
+			</div>
+			<!--/Supplément-->
+		</div>
+		<div class="col-md-1">
+			<!--Majoré (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['supplement_percentage_'+{{$index}}].$invalid && (vmPro.roadTransportForm['supplement_percentage_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="supplement_percentage_{{$index}}">Majoré</label>
+				<input type="number" min="0" max="100" class="form-control" id="supplement_percentage_{{$index}}" name="supplement_percentage_{{$index}}"
+				    placeholder="%" ng-model="vmPro.product.road_transport.occupants[occupant].supplement_percentage">
+			</div>
+			<!--/Majoré (pourcentage)-->
+		</div>
+		<div class="col-md-1">
+			<!--Réduction (pourcentage)-->
+			<div class="form-group has-feedback" ng-class="{'has-error': vmPro.roadTransportForm['discount_'+{{$index}}].$invalid && (vmPro.roadTransportForm['discount_'+{{$index}}].$dirty || vmPro.roadTransportForm.$submitted)}">
+				<label for="discount_{{$index}}">Réduction</label>
+				<input type="number" min="0" max="100" class="form-control" id="discount_{{$index}}" name="discount_{{$index}}" placeholder="%"
+				    ng-model="vmPro.product.road_transport.occupants[occupant].discount">
+			</div>
+			<!--/Réduction (pourcentage)-->
+		</div>
+		<div class="col-md-10"></div>
+		<div class="col-md-2">
+			<!--Total Occupant-->
+			<div class="form-group">
+				<label for="total_{{$index}}">Total par Occupant</label>
+				<input type="number" class="form-control" id="total_{{$index}}" name="total_{{$index}}" placeholder="Total Occupant" readonly
+				    ng-value="vmPro.roadPriceByOccupant(occupant)">
+			</div>
+			<!--/Total Occupant-->
+		</div>
+	</div>
+</form>

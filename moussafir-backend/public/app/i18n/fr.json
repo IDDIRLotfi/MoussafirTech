@@ -1,0 +1,68 @@
+{
+    "DIALOGS_ERROR": "Erreur",
+    "DIALOGS_ERROR_MSG": "Une erreur est survenue!",
+    "DIALOGS_CLOSE": "Fermer",
+    "DIALOGS_CONFIRMATION": "Confirmation",
+    "DIALOGS_CONFIRMATION_MSG": "Confirmation requise.",
+    "DIALOGS_OK": "OK",
+    "DIALOGS_YES": "Oui",
+    "DIALOGS_NO": "Non",
+    "home": {
+        "main": "Accueil",
+        "administration": "Administration",
+        "total_balance": "Balance Total",
+        "transactions": "Journal des transactions",
+        "suppliers": "Gestion des Fournisseurs",
+        "clients": "Gestion des Clients",
+        "trips": "Voyage Organisé"
+    },
+    "clients": {
+        "main": "Clients",
+        "list": "Liste des Clients",
+        "add": "Ajouter Client",
+        "edit": "Modifier Client"
+    },
+    "suppliers": {
+        "main": "Fournisseurs",
+        "list": "Liste Fournisseurs",
+        "add": "Ajouter Fournisseur",
+        "edit": "Modifier Fournisseur"
+    },
+    "agents": {
+        "main": "Agents",
+        "list": "Liste des Agents",
+        "add": "Ajouter Agent",
+        "edit": "Modifier Agent"
+    },
+    "products": {
+        "main": "Transactions",
+        "list": "Liste des produits",
+        "add": "Ajouter Produit",
+        "edit": "Modifier Produit",
+        "rest": "Produits Avec Reste"
+    },
+    "trips": {
+        "main": "Voyage organisé",
+        "list": "Liste des Voyages",
+        "add": "Ajouter Voyage",
+        "edit": "Modifier Voyage",
+        "rest": "Voyages Avec Reste"
+    },
+    "balance": {
+        "main": "Balance",
+        "paid": "Total Reçu",
+        "rest": "Total Reste",
+        "profit": "Total Bénéfice",
+        "purchase": "Total Achat",
+        "total": "Total Vente"
+    },
+    "connecterUser": {
+        "profile": "profil",
+        "logout": "Se déconnecter"
+    },
+    "ERROR": {
+        "404": "Le contenu que vous avez demandé n'existe pas",
+        "401": "Vous n'avez pas le droit d'effectuer cette opération.",
+        "500": "Service inaccessible pour le moment."
+    }
+}

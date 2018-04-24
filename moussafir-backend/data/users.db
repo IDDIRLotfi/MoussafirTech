@@ -1,0 +1,3 @@
+{"email":"super-admin","role":"super-admin","password":"$2a$10$WHio6Zg16TxTGkRVGOD1jONP76Z0QzhzU0KxMdX4v1urLR4.Jkcae","_id":"GNJ7vdlSz00NqSxN"}
+{"email":"admin","role":"admin","password":"$2a$10$7c6bqQpIaM2QzhDhl1xaQelZPwwQk2o40F70DBaPBDWDtmHbgQhqi","_id":"Vo8ysrzOnugfBcKt"}
+{"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}

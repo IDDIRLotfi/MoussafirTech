@@ -1,0 +1,47 @@
+.al-sidebar {
+	right: 0 !important;
+	left: inherit !important;
+}
+
+.al-main {
+	margin-left: 0 !important;
+	margin-right: 180px !important;
+}
+
+.al-sidebar-list-link i,
+.al-sidebar-list-link span {
+	float: right !important;
+}
+
+.al-sidebar-list-link span {
+	margin-right: 20px !important;
+	font-size: 18px !important;
+}
+
+.al-sidebar-list-link b {
+	left: 10px !important;
+}
+
+.collapse-menu-link {
+	display: none !important;
+}
+
+.sidebar-hover-elem {
+	left: 0px !important;
+}
+
+.home-buttons {
+	font-size: 30px !important;
+}
+
+.top-dropdown-menu.profile-dropdown a i{
+	float: right !important;
+}
+.top-dropdown-menu.profile-dropdown a{
+	text-align: right !important;
+    font-size: 16px !important;
+}
+
+.top-dropdown-menu.profile-dropdown a span{
+	margin-right: 10px !important;
+}
